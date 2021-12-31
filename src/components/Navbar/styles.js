@@ -4,8 +4,9 @@ import colors from "../../config/colors";
 
 export default makeStyles((theme) => ({
     appBar: {
-        top: 30
+        // top: 30
     },
+    offset: theme.mixins.toolbar,
     toolbar: {
         justifyContent: 'space-between',
         backgroundColor: colors.white

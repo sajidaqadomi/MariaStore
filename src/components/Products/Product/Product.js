@@ -5,15 +5,21 @@ import {
     ShoppingCartOutlined,
 } from "@material-ui/icons";
 import React from "react";
+import { Link } from "react-router-dom";
 
 import useStyles from "./styles";
 
-const Product = ({ product: { img }, ...rest }) => {
-    const classes = useStyles();
+const Product = ({ product: { img, id }, ...rest }) => {
+    console.log(img, id)
+    const classes = useStyles({ img });
     return (
         <ImageListItem cols={2} {...rest}>
             <div className={classes.container}>
-                <img src={img} alt={"productImg"} className={classes.img} />
+                <div className={classes.imgContainer}>
+                    {/* <img src={img} alt={"productImg"} className={classes.img} /> */}
+                </div>
+
+                <div className={classes.circle} />
                 <div className={classes.iconsLayer}>
                     <Avatar
                         className={classes.avatar}
@@ -23,7 +29,8 @@ const Product = ({ product: { img }, ...rest }) => {
                     </Avatar>
                     <Avatar
                         className={classes.avatar}
-                        onClick={() => console.log("click")}
+                        component={Link}
+                        to={`/product/${id}`}
                     >
                         <Search className={classes.icon} />
                     </Avatar>

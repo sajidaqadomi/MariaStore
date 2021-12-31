@@ -3,6 +3,7 @@ import React from "react";
 import {
     Categories,
     Products,
+    ScrollList,
     Slider,
 } from "../../components";
 
@@ -11,6 +12,7 @@ const Home = () => {
         <div>
             <Slider />
             <Categories />
+            {/* <ScrollList /> */}
             <Products />
         </div>
     );

@@ -13,11 +13,18 @@ export default makeStyles((theme) => ({
         paddingBottom: theme.spacing(3),
 
     },
-    imageList: {
-        width: '100%',
-        maxHeight: '500px',
+    slider: {
+        marginTop: theme.spacing(3),
+        '& .slick-list': {
+            // margin: '0 -8px',
+            '& .slick-slide': {
+                '& > div': {
+                    margin: '0 8px'
+                }
+            }
+        }
 
-    },
+    }
 
 
 }))

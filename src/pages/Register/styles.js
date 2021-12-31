@@ -10,9 +10,14 @@ export default makeStyles((theme) => ({
           ),url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        paddingTop: '50px'
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+
 
     },
+    offset: theme.mixins.toolbar,
     paper: {
         width: '40vw',
         margin: 'auto',

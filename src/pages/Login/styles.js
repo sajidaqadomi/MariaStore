@@ -10,7 +10,12 @@ export default makeStyles((theme) => ({
           ),url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        paddingTop: '50px'
+        // paddingTop: '50px'
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
 
     },
     paper: {

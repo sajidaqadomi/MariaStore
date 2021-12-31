@@ -11,7 +11,6 @@ const SliderItem = ({ item }) => {
         <div className={classes.wrapper} key={id}>
             <div className={classes.imgContainer}>
                 <img src={img} alt='sliderImg' className={classes.img} />
-
             </div>
             <div className={classes.desContainer}>
                 <Typography component='h2' variant='h1' className={classes.title}>{title}</Typography>

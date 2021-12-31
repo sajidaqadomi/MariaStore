@@ -1,11 +1,16 @@
 import { Button, TextField, Typography } from "@material-ui/core";
 import { Send } from "@material-ui/icons";
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 import useStyles from "./styles";
 
 const NewsLetter = () => {
     const classes = useStyles();
+    const { pathname } = useLocation();
+    //  console.log(location)
+    if (pathname === "/login" || pathname === "/register" || pathname === "/cart")
+        return <></>;
     return (
         <div className={classes.root}>
             <Typography variant="h1" component="h2" className={classes.title}>

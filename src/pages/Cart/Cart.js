@@ -8,9 +8,16 @@ import {
 } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import StripeCheckout from 'react-stripe-checkout';
 
+import { updateOrderItemQ } from "../../actions/cart";
 import useStyles from "./styles";
+import { postPayment } from "../../actions/payment";
+import { useNavigate } from "react-router";
+
+const STRIPE_KEY = process.env.REACT_APP_STRIPE
 
 const Color = styled.span`
   display: block;
@@ -20,10 +27,28 @@ const Color = styled.span`
   border-radius: 50%;
 
   margin: 0 5px;
-`;
+`
 
 const Cart = () => {
     const classes = useStyles();
+    const { products, total, quantity } = useSelector(state => state.cart)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const handleOrderQuantity = (type, id, Q) => {
+        if (type === 'inc') {
+            Q < 10 && dispatch(updateOrderItemQ(id, { quantity: Q + 1 }))
+        }
+        if (type === 'dec') {
+            Q > 1 && dispatch(updateOrderItemQ(id, { quantity: Q - 1 }))
+        }
+    }
+
+    const onToken = (token) => {
+        if (token) dispatch(postPayment({ tokenId: token.id, amount: total * 100 }, navigate))
+    }
+    if (!products.length) return ''
+    //console.log(products, '*******')
     return (
         <Container maxWidth="xl">
             <Typography className={classes.title} variant="h3" component="h2">
@@ -43,91 +68,55 @@ const Cart = () => {
             </div>
             <div className={classes.bottom}>
                 <div className={classes.productsContainer}>
-                    <div className={classes.product}>
-                        <div className={classes.productDetails}>
-                            <div className={classes.productImg}>
-                                <img
-                                    className={classes.img}
-                                    src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A"
-                                    alt="img not found"
-                                />
-                            </div>
-                            <div className={classes.productInfo}>
-                                <Typography className={classes.name}>
-                                    <Box fontWeight="bold" component="span">
-                                        Product:
-                                    </Box>
-                                    JESSIE THUNDER SHOES
-                                </Typography>
-                                <Typography className={classes.name}>
-                                    <Box fontWeight="bold" component="span">
-                                        ID:
-                                    </Box>
-                                    93813718293
-                                </Typography>
-                                <Color color="black" />
-                                <Typography className={classes.size}>
-                                    <Box fontWeight="bold" component="span">
-                                        Size:
-                                    </Box>
-                                    37.5
-                                </Typography>
-                            </div>
-                        </div>
-                        <div className={classes.priceDetails}>
-                            <div className={classes.amountContainer}>
-                                <Add />
-                                <Typography component="span" className={classes.amount}>
-                                    2
-                                </Typography>
-                                <Remove />
-                            </div>
-                            <Typography className={classes.price}>$ 30</Typography>
-                        </div>
-                    </div>
-                    <Divider />
-                    <div className={classes.product}>
-                        <div className={classes.productDetails}>
-                            <div className={classes.productImg}>
-                                <img
-                                    className={classes.img}
-                                    src="https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png"
-                                    alt="img not found"
-                                />
-                            </div>
-                            <div className={classes.productInfo}>
-                                <Typography className={classes.name}>
-                                    <Box fontWeight="bold" component="span">
-                                        Product:
-                                    </Box>
-                                    JESSIE THUNDER SHOES
-                                </Typography>
-                                <Typography className={classes.name}>
-                                    <Box fontWeight="bold" component="span">
-                                        ID:
-                                    </Box>
-                                    93813718293
-                                </Typography>
-                                <Color color="black" />
-                                <Typography className={classes.size}>
-                                    <Box fontWeight="bold" component="span">
-                                        Size:
-                                    </Box>
-                                    37.5
-                                </Typography>
-                            </div>
-                        </div>
-                        <div className={classes.priceDetails}>
-                            <div className={classes.amountContainer}>
-                                <Add />
-                                <Typography component="span" className={classes.amount}>
-                                    2
-                                </Typography>
-                                <Remove />
-                            </div>
-                            <Typography className={classes.price}>$ 30</Typography>
-                        </div>
-                    </div>
+                    {
+                        products?.map(item => (
+                            <>
+                                <div className={classes.product}>
+                                    <div className={classes.productDetails}>
+                                        <div className={classes.productImg}>
+                                            <img
+                                                className={classes.img}
+                                                src={item.product.img}
+                                                alt={item.product.title}
+                                            />
+                                        </div>
+                                        <div className={classes.productInfo}>
+                                            <Typography className={classes.name}>
+                                                <Box fontWeight="bold" component="span">
+                                                    Product:
+                                                </Box>
+                                                {item.product.title}
+                                            </Typography>
+                                            <Typography className={classes.name}>
+                                                <Box fontWeight="bold" component="span">
+                                                    ID:
+                                                </Box>
+                                                {item.product.id}
+                                            </Typography>
+                                            <Color color={item.selectedColor} />
+                                            <Typography className={classes.size}>
+                                                <Box fontWeight="bold" component="span">
+                                                    Size:
+                                                </Box>
+                                                {item?.selectedSize}
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <div className={classes.priceDetails}>
+                                        <div className={classes.amountContainer}>
+                                            <Add onClick={() => handleOrderQuantity('inc', item.id, item.quantity)} />
+                                            <Typography component="span" className={classes.amount}>
+                                                {item.quantity}
+                                            </Typography>
+                                            <Remove onClick={() => handleOrderQuantity('dec', item.id, item.quantity)} />
+                                        </div>
+                                        <Typography className={classes.price}>$ {item.total}</Typography>
+                                    </div>
+                                </div>
+                                <Divider />
+                            </>
+                        ))
+                    }
                 </div>
                 <div className={classes.summary}>
                     <Typography variant="h3" className={classes.summaryTitle}>
@@ -138,7 +127,7 @@ const Cart = () => {
                             Subtotal
                         </Typography>
                         <Typography variant="body2" component="span">
-                            $80
+                            $ {total}
                         </Typography>
                     </div>
                     <div className={classes.summaryItem}>
@@ -171,12 +160,22 @@ const Cart = () => {
                             variant="body2"
                             component="span"
                         >
-                            $ 80
+                            $ {total}
                         </Typography>
                     </div>
-                    <Button variant="contained" className={classes.btn} fullWidth>
-                        CHECKOUT NOW
-                    </Button>
+                    <StripeCheckout
+                        stripeKey={STRIPE_KEY}
+                        token={onToken}
+                        name="Maria Store"
+                        billingAddress
+                        shippingAddress
+                        description={`Your total is $ ${total}`}
+                        amount={total * 100}
+                    >
+                        <Button variant="contained" className={classes.btn} fullWidth>
+                            CHECKOUT NOW
+                        </Button>
+                    </StripeCheckout>
                 </div>
             </div>
         </Container>
