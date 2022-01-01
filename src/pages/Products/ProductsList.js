@@ -1,23 +1,25 @@
 import { Container, MenuItem, Select, Typography } from "@material-ui/core";
 import React, { useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Products } from "../../components";
 import useStyles from "./styles";
 
 const ProductsList = () => {
     const classes = useStyles();
-    const params = useParams()
-    const location = useLocation();
-    const cat = params.cat || location.pathname.split('/')[1]
-    console.log(cat)
+    const { cat } = useParams();
+    // const location = useLocation();
+    // const cat = params.cat || location.pathname.split('/')[1]
 
-    const [filter, setFilter] = useState({ color: "", size: "" })
+    const [filter, setFilter] = useState({ color: "", size: "" });
     const [sort, setSort] = useState("newest");
 
     const handleFilter = (e) => {
-        setFilter((prevFilter) => ({ ...prevFilter, [e.target.name]: e.target.value }))
-    }
+        setFilter((prevFilter) => ({
+            ...prevFilter,
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     return (
         <>
@@ -34,7 +36,7 @@ const ProductsList = () => {
                             className={classes.select}
                             value={filter.color}
                             // label="Color"
-                            name='color'
+                            name="color"
                             variant="outlined"
                             displayEmpty
                             onChange={handleFilter}

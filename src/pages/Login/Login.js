@@ -2,49 +2,46 @@ import { Grid, Link, Paper, Typography } from "@material-ui/core";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../../actions/user";
-import * as yup from 'yup';
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormInput, FormSubmit, Toast } from "../../components";
 import useStyles from "./styles";
 import { useNavigate } from "react-router";
 import { AUTH_ERROR_RESET } from "../../utility/actionTypes";
-
+import { signIn } from "../../actions/user";
 
 let schema = yup.object().shape({
     userName: yup.string().required(),
-    password: yup.string().required()
+    password: yup.string().required(),
 });
 
 const Login = () => {
     const methods = useForm({
         resolver: yupResolver(schema),
-        mode: 'onTouched',
+        mode: "onTouched",
         defaultValues: {
             userName: "",
             password: "",
         },
     });
-    const dispatch = useDispatch()
-    const { isLoading, error, user } = useSelector(state => state.auth)
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const { isLoading, error } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
     const classes = useStyles();
 
     const onSubmit = (data) => {
-        dispatch(signIn(data, navigate))
-        methods.reset()
-
+        dispatch(signIn(data, navigate));
+        methods.reset();
     };
 
     const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
 
-        dispatch({ type: AUTH_ERROR_RESET })
-    }
-
+        dispatch({ type: AUTH_ERROR_RESET });
+    };
 
     return (
         <>
@@ -54,7 +51,6 @@ const Login = () => {
                 title="Sign In Failed"
                 type="error"
                 message={error}
-
             />
             <FormProvider {...methods}>
                 <div className={classes.container}>
@@ -74,7 +70,11 @@ const Login = () => {
                                     <FormInput name="password" label="Password" />
                                 </Grid>
                             </Grid>
-                            <FormSubmit title="login" disabled={isLoading} style={{ marginTop: "10px" }} />
+                            <FormSubmit
+                                title="login"
+                                disabled={isLoading}
+                                style={{ marginTop: "10px" }}
+                            />
 
                             <Link className={classes.link}>
                                 DO NOT YOU REMEMBER THE PASSWORD?

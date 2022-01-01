@@ -1,14 +1,13 @@
 // import { Button, Slider, Typography } from '@material-ui/core'
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-
-import { sliderItems } from "../../data";
-import SliderItem from "./SliderItem";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 import colors from "../../config/colors";
 import useStyles from "./styles";
+import { sliderItems } from "../../data";
+import SliderItem from "./SliderItem";
 
 const SliderComponent = () => {
     const classes = useStyles();

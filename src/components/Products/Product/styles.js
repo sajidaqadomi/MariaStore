@@ -1,6 +1,4 @@
 import { alpha, makeStyles } from "@material-ui/core";
-import zIndex from "@material-ui/core/styles/zIndex";
-import { Height } from "@material-ui/icons";
 import colors from "../../../config/colors";
 
 export default makeStyles((theme) => ({
@@ -10,7 +8,6 @@ export default makeStyles((theme) => ({
         left: 0,
         width: '100%',
         height: '100%',
-        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

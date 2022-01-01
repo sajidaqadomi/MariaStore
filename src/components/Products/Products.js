@@ -1,14 +1,12 @@
 import { Container, ImageList } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-
 import { useResponsive } from "react-hooks-responsive";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import useStyles from "./styles";
 import Product from "./Product";
 import { getProducts } from "../../actions/products";
-import { PanoramaSharp } from "@material-ui/icons";
 
 const breakpoints = { xs: 0, sm: 480, md: 1024 };
 
@@ -17,22 +15,15 @@ const Products = ({ filter, sort }) => {
     const { products, isLoading } = useSelector((state) => state.products);
     const { categories } = useSelector((state) => state.categories);
     const [filterProducts, setFilterProducts] = useState(products);
-
-    const params = useParams();
-    const location = useLocation()
-
-    console.log(params, location.pathname.split('/'))
-
-    const cat = params.cat || location.pathname.split('/')[2]
-
+    const { cat } = useParams();
     const classes = useStyles();
     const { screenIsAtMost } = useResponsive(breakpoints);
-    console.log(cat, 'cat')
+
     useEffect(() => {
-        let currCategory
+        let currCategory;
         if (cat && categories.length) {
-            currCategory = categories.filter((category) => category.cat === cat)
-            dispatch(getProducts(currCategory[0].id))
+            currCategory = categories.filter((category) => category.cat === cat);
+            dispatch(getProducts(currCategory[0].id));
         }
 
         !cat && dispatch(getProducts(null));
@@ -43,7 +34,6 @@ const Products = ({ filter, sort }) => {
     }, [products, cat]);
 
     useEffect(() => {
-        console.log(cat, location.pathname, 'tesssst')
         cat &&
             setFilterProducts(
                 products.filter((item) => {
@@ -52,7 +42,7 @@ const Products = ({ filter, sort }) => {
                     });
                 })
             );
-    }, [filter]);
+    }, [filter, cat, products]);
 
     useEffect(() => {
         if (cat) {
@@ -60,7 +50,7 @@ const Products = ({ filter, sort }) => {
             if (sort === "desc") sortPriceByDesc();
             if (sort === "newest") sortByNewest();
         }
-    }, [sort]);
+    }, [sort, cat]);
 
     const sortPriceByAsc = () => {
         setFilterProducts((prev) => prev.sort((a, b) => a.price - b.price));

@@ -1,19 +1,20 @@
-import * as api from '../api/categories'
-import { END_LOADING_CAT, FETCH_CATEGORY, START_LOADING_CAT } from '../utility/actionTypes'
+import * as api from "../api/categories";
+import {
+    END_LOADING_CAT,
+    FETCH_CATEGORY,
+    START_LOADING_CAT,
+} from "../utility/actionTypes";
 
 export const getCategories = () => async (dispatch) => {
     try {
-        dispatch({ type: START_LOADING_CAT })
+        dispatch({ type: START_LOADING_CAT });
 
-        const { data } = await api.getCategory()
-        dispatch({ type: FETCH_CATEGORY, payload: data })
+        const { data } = await api.getCategory();
+        dispatch({ type: FETCH_CATEGORY, payload: data });
 
-        dispatch({ type: END_LOADING_CAT })
+        dispatch({ type: END_LOADING_CAT });
     } catch (error) {
-        console.log(error)
-        dispatch({ type: END_LOADING_CAT })
-
+        console.log(error);
+        dispatch({ type: END_LOADING_CAT });
     }
-
-
-}
+};

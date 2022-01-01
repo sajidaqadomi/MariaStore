@@ -15,9 +15,10 @@ import useStyles from "./styles";
 
 const Footer = () => {
     const classes = useStyles();
-    const location = useLocation()
+    const location = useLocation();
 
-    if (location.pathname === '/login' || location.pathname === '/register') return <></>;
+    if (location.pathname === "/login" || location.pathname === "/register")
+        return <></>;
 
     return (
         <div className={classes.footer}>

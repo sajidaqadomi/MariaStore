@@ -1,35 +1,36 @@
-import { Grid, Paper, Slide, Snackbar, Typography } from "@material-ui/core";
+import { Grid, Paper, Typography } from "@material-ui/core";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import * as yup from 'yup';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 
 import { signUp } from "../../actions/user";
 import { FormInput, FormSubmit, Toast } from "../../components";
 import useStyles from "./styles";
 import { AUTH_ERROR_RESET } from "../../utility/actionTypes";
 
-
 let schema = yup.object().shape({
     firstName: yup.string().required(),
     lastName: yup.string().required(),
     userName: yup.string().required(),
     email: yup.string().email().required(),
-    password: yup.string().matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-        "Must Contain At Least 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-    ),
-    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'passwords must match')
-
+    password: yup
+        .string()
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            "Must Contain At Least 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+        ),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password"), null], "passwords must match"),
 });
 
 const Register = () => {
     const methods = useForm({
         resolver: yupResolver(schema),
-        mode: 'onTouched',
+        mode: "onTouched",
         defaultValues: {
             firstName: "",
             lastName: "",
@@ -39,27 +40,24 @@ const Register = () => {
             confirmPassword: "",
         },
     });
-    const { isLoading, error } = useSelector((state) => state.auth)
-    console.log(isLoading, error, 'auth')
-    const dispatch = useDispatch()
+    const { isLoading, error } = useSelector((state) => state.auth);
+    // console.log(isLoading, error, 'auth')
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const classes = useStyles();
 
     const onSubmit = (data) => {
-        dispatch(signUp(data, navigate))
-        methods.reset()
-
+        dispatch(signUp(data, navigate));
+        methods.reset();
     };
 
     const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
 
-        dispatch({ type: AUTH_ERROR_RESET })
-    }
-
-
+        dispatch({ type: AUTH_ERROR_RESET });
+    };
 
     return (
         <>
@@ -69,7 +67,6 @@ const Register = () => {
                 title="Register Failed"
                 type="error"
                 message={error}
-
             />
 
             <FormProvider {...methods}>
@@ -94,27 +91,18 @@ const Register = () => {
                                     <FormInput name="userName" label="User Name" />
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                    <FormInput name="email" label="Email" type='email' />
+                                    <FormInput name="email" label="Email" type="email" />
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                    <FormInput
-                                        name="password"
-                                        label="Password"
-
-
-                                    />
+                                    <FormInput name="password" label="Password" />
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                    <FormInput
-                                        name="confirmPassword"
-                                        label="ConfirmPassword"
-
-                                    />
+                                    <FormInput name="confirmPassword" label="ConfirmPassword" />
                                 </Grid>
                             </Grid>
                             <Typography variant="body2" className={classes.agreement}>
-                                By creating an account, I consent to the processing of my personal
-                                data in accordance with the <b>PRIVACY POLICY</b>
+                                By creating an account, I consent to the processing of my
+                                personal data in accordance with the <b>PRIVACY POLICY</b>
                             </Typography>
                             <FormSubmit title="create" disabled={isLoading} />
                         </form>

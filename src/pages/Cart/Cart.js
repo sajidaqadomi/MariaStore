@@ -10,7 +10,7 @@ import { Add, Remove } from "@material-ui/icons";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import StripeCheckout from 'react-stripe-checkout';
+import StripeCheckout from "react-stripe-checkout";
 
 import { updateOrderItemQ } from "../../actions/cart";
 import useStyles from "./styles";
@@ -27,28 +27,31 @@ const Color = styled.span`
   border-radius: 50%;
 
   margin: 0 5px;
-`
+`;
 
 const Cart = () => {
     const classes = useStyles();
-    const { products, total, quantity } = useSelector(state => state.cart)
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const { products, total } = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleOrderQuantity = (type, id, Q) => {
-        if (type === 'inc') {
-            Q < 10 && dispatch(updateOrderItemQ(id, { quantity: Q + 1 }))
+        if (type === "inc") {
+            Q < 10 && dispatch(updateOrderItemQ(id, { quantity: Q + 1 }));
         }
-        if (type === 'dec') {
-            Q > 1 && dispatch(updateOrderItemQ(id, { quantity: Q - 1 }))
+        if (type === "dec") {
+            Q > 1 && dispatch(updateOrderItemQ(id, { quantity: Q - 1 }));
         }
-    }
+    };
 
     const onToken = (token) => {
-        if (token) dispatch(postPayment({ tokenId: token.id, amount: total * 100 }, navigate))
-    }
-    if (!products.length) return ''
-    //console.log(products, '*******')
+        if (token)
+            dispatch(
+                postPayment({ tokenId: token.id, amount: total * 100 }, navigate)
+            );
+    };
+    if (!products.length) return "";
+
     return (
         <Container maxWidth="xl">
             <Typography className={classes.title} variant="h3" component="h2">
@@ -68,55 +71,63 @@ const Cart = () => {
             </div>
             <div className={classes.bottom}>
                 <div className={classes.productsContainer}>
-                    {
-                        products?.map(item => (
-                            <>
-                                <div className={classes.product}>
-                                    <div className={classes.productDetails}>
-                                        <div className={classes.productImg}>
-                                            <img
-                                                className={classes.img}
-                                                src={item.product.img}
-                                                alt={item.product.title}
-                                            />
-                                        </div>
-                                        <div className={classes.productInfo}>
-                                            <Typography className={classes.name}>
-                                                <Box fontWeight="bold" component="span">
-                                                    Product:
-                                                </Box>
-                                                {item.product.title}
-                                            </Typography>
-                                            <Typography className={classes.name}>
-                                                <Box fontWeight="bold" component="span">
-                                                    ID:
-                                                </Box>
-                                                {item.product.id}
-                                            </Typography>
-                                            <Color color={item.selectedColor} />
-                                            <Typography className={classes.size}>
-                                                <Box fontWeight="bold" component="span">
-                                                    Size:
-                                                </Box>
-                                                {item?.selectedSize}
-                                            </Typography>
-                                        </div>
+                    {products?.map((item) => (
+                        <>
+                            <div className={classes.product} key={item._id}>
+                                <div className={classes.productDetails}>
+                                    <div className={classes.productImg}>
+                                        <img
+                                            className={classes.img}
+                                            src={item.product.img}
+                                            alt={item.product.title}
+                                        />
                                     </div>
-                                    <div className={classes.priceDetails}>
-                                        <div className={classes.amountContainer}>
-                                            <Add onClick={() => handleOrderQuantity('inc', item.id, item.quantity)} />
-                                            <Typography component="span" className={classes.amount}>
-                                                {item.quantity}
-                                            </Typography>
-                                            <Remove onClick={() => handleOrderQuantity('dec', item.id, item.quantity)} />
-                                        </div>
-                                        <Typography className={classes.price}>$ {item.total}</Typography>
+                                    <div className={classes.productInfo}>
+                                        <Typography className={classes.name}>
+                                            <Box fontWeight="bold" component="span">
+                                                Product:
+                                            </Box>
+                                            {item.product.title}
+                                        </Typography>
+                                        <Typography className={classes.name}>
+                                            <Box fontWeight="bold" component="span">
+                                                ID:
+                                            </Box>
+                                            {item.product.id}
+                                        </Typography>
+                                        <Color color={item.selectedColor} />
+                                        <Typography className={classes.size}>
+                                            <Box fontWeight="bold" component="span">
+                                                Size:
+                                            </Box>
+                                            {item?.selectedSize}
+                                        </Typography>
                                     </div>
                                 </div>
-                                <Divider />
-                            </>
-                        ))
-                    }
+                                <div className={classes.priceDetails}>
+                                    <div className={classes.amountContainer}>
+                                        <Add
+                                            onClick={() =>
+                                                handleOrderQuantity("inc", item.id, item.quantity)
+                                            }
+                                        />
+                                        <Typography component="span" className={classes.amount}>
+                                            {item.quantity}
+                                        </Typography>
+                                        <Remove
+                                            onClick={() =>
+                                                handleOrderQuantity("dec", item.id, item.quantity)
+                                            }
+                                        />
+                                    </div>
+                                    <Typography className={classes.price}>
+                                        $ {item.total}
+                                    </Typography>
+                                </div>
+                            </div>
+                            <Divider />
+                        </>
+                    ))}
                 </div>
                 <div className={classes.summary}>
                     <Typography variant="h3" className={classes.summaryTitle}>

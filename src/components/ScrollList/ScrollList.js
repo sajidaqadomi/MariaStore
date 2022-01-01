@@ -1,7 +1,5 @@
-import { ArrowLeft, ArrowRight } from '@material-ui/icons';
-import React from 'react'
+import React from "react";
 import Slider from "react-slick";
-
 
 const ScrollList = ({ children, rest }) => {
     const settings = {
@@ -14,7 +12,6 @@ const ScrollList = ({ children, rest }) => {
         centerMode: true,
         focusOnSelect: true,
         swipeToSlide: true,
-        responsive: true,
         responsive: [
             {
                 breakpoint: 960,
@@ -22,16 +19,15 @@ const ScrollList = ({ children, rest }) => {
                     slidesToShow: 1.15,
                     slidesToScroll: 1,
                     infinite: true,
-
-                }
-            }]
-
+                },
+            },
+        ],
     };
     return (
-        <Slider  {...settings} {...rest}>
+        <Slider {...settings} {...rest}>
             {children}
         </Slider>
-    )
-}
+    );
+};
 
-export default ScrollList
+export default ScrollList;

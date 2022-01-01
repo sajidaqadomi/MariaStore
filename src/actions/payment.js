@@ -1,17 +1,11 @@
-import * as api from '../api/payment'
+import * as api from "../api/payment";
 
 export const postPayment = (paymentData, navigate) => async (dispatch) => {
     try {
-        const { data } = await api.postPayment(paymentData)
+        const { data } = await api.postPayment(paymentData);
 
-        if (data) navigate('/success', { state: { stripeData: data } })
-
-
+        if (data) navigate("/success", { state: { stripeData: data } });
     } catch (error) {
-        console.log(error)
-
+        console.log(error);
     }
-
-}
-
-
+};

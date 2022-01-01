@@ -1,4 +1,4 @@
-import { Button, ImageListItem, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import useStyles from "./styles";
 const CategoriesItem = ({ item: { img, title, cat }, ...rest }) => {
     const classes = useStyles();
     return (
-        <div {...rest} className={classes.imgListItem}>
+        <div className={classes.imgListItem} {...rest} >
             <div className={classes.imgContainer}>
                 <img src={img} alt={title} className={classes.img} />
                 <div className={classes.info}>

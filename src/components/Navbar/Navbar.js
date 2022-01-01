@@ -42,7 +42,7 @@ const Navbar = () => {
             <AppBar className={classes.appBar} position="fixed">
                 <Toolbar className={classes.toolbar}>
                     <div className={classes.leftSide}>
-                        <Select value={"en"} onChange={""} className={classes.select}>
+                        <Select value={"en"} onChange={() => console.log('change')} className={classes.select}>
                             <MenuItem value={"en"}>En</MenuItem>
                             <MenuItem value={"ar"}>Arabic</MenuItem>
                         </Select>
@@ -87,12 +87,12 @@ const Navbar = () => {
                                 </Link>
                             </>
                         )}
-
-
                     </div>
                 </Toolbar>
-            </AppBar >
-            {(location.pathname !== '/register') && (location.pathname !== '/login') && <div className={classes.offset} />}
+            </AppBar>
+            {location.pathname !== "/register" && location.pathname !== "/login" && (
+                <div className={classes.offset} />
+            )}
         </>
     );
 };

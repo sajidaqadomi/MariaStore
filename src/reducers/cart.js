@@ -3,7 +3,6 @@ import {
     GET_CART_BY_USERID,
     UPDATE_ORDER_ITEM_Q,
 } from "../utility/actionTypes";
-import { products } from "./product";
 
 export const cart = (
     state = { products: [], quantity: 0, total: 0 },
@@ -18,7 +17,6 @@ export const cart = (
                     total: orderItem.quantity * orderItem.product.price,
                 })),
                 total: action.payload.products.reduce((prev, currOrder) => {
-                    // console.log(currOrder, prev, "currentOrder rducer");
                     return prev + currOrder.quantity * currOrder.product.price;
                 }, 0),
             };
@@ -32,7 +30,7 @@ export const cart = (
 
         case UPDATE_ORDER_ITEM_Q:
             const newQuantity = action.payload.quantity;
-            const oldTotal = state.total;
+            //const oldTotal = state.total;
             return {
                 ...state,
                 products: state.products.map((orderItem) =>

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import useStyles from "./styles";
 
 const Product = ({ product: { img, id }, ...rest }) => {
-    console.log(img, id)
+    // console.log(img, id)
     const classes = useStyles({ img });
     return (
         <ImageListItem cols={2} {...rest}>

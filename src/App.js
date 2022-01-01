@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Home, ProductsList, Product, Register, Login, Cart, Success } from "./pages";
-import { Announcement, Footer, Navbar, NewsLetter } from './components'
+import { Footer, Navbar, NewsLetter } from './components'
 import useStyles from "./styles"
 import { getCartByUserId } from "./actions/cart";
 import { getCategories } from "./actions/categories";
@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getCategories())
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="App">

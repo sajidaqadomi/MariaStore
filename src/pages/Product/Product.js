@@ -16,9 +16,9 @@ import { getProductsById } from "../../actions/products";
 import { addToCart } from "../../actions/cart";
 
 const selectedStyles = css`
-transform: scale(1.1);
-box-shadow: 0 7px 16px 0px rgba(0,0,0,0.25);
-`
+  transform: scale(1.1);
+  box-shadow: 0 7px 16px 0px rgba(0, 0, 0, 0.25);
+`;
 
 const FilterColor = styled.span`
   display: block;
@@ -30,41 +30,50 @@ const FilterColor = styled.span`
   margin: 0 5px;
   &:hover {
     transform: scale(1.1);
-  };
-  &:hover { ${selectedStyles} };
+  }
+  &:hover {
+    ${selectedStyles}
+  }
   // If the active property is set add the hoverStyles
-  ${props => props.selected && selectedStyles}
+  ${(props) => props.selected && selectedStyles}
 `;
 
 const Product = () => {
-    const dispatch = useDispatch()
-    const { product, isLoading } = useSelector((state) => state.products)
+    const dispatch = useDispatch();
+    const { product, isLoading } = useSelector((state) => state.products);
+    const { id: cartId } = useSelector((state) => state.cart);
 
-    const [selectedColor, setColor] = useState("")
-    const [size, setSize] = useState("")
-    const [quantity, setQuantity] = useState(1)
+    const [selectedColor, setColor] = useState("");
+    const [size, setSize] = useState("");
+    const [quantity, setQuantity] = useState(1);
 
     const classes = useStyles();
-    const { id } = useParams()
+    const { id } = useParams();
 
     useEffect(() => {
-        if (id) dispatch(getProductsById(id))
-    }, [dispatch])
+        if (id) dispatch(getProductsById(id));
+    }, [dispatch, id]);
 
     const handleQuantity = (type) => {
-        if (type === 'dec') {
-            quantity > 1 && setQuantity((q) => (q - 1))
+        if (type === "dec") {
+            quantity > 1 && setQuantity((q) => q - 1);
         } else {
-            quantity < 10 && setQuantity((q) => (q + 1))
+            quantity < 10 && setQuantity((q) => q + 1);
         }
-    }
+    };
 
     const handleAddToCart = () => {
-        dispatch(addToCart('61c8e4736fbe9cde9d8f8789', { product: product.id, selectedColor: selectedColor, selectedSize: size, quantity }))
+        dispatch(
+            addToCart(cartId, {
+                product: product.id,
+                selectedColor: selectedColor,
+                selectedSize: size,
+                quantity,
+            })
+        );
+    };
 
-    }
-
-    if (isLoading) return "loading..."
+    if (isLoading) return "loading...";
     return (
         <Container maxWidth="xl">
             <div className={classes.productContent}>
@@ -91,7 +100,14 @@ const Product = () => {
                                 Color
                             </Typography>
                             <div className={classes.colors}>
-                                {product?.color?.map(color => <FilterColor key={color} color={color} selected={color === selectedColor} onClick={() => setColor(color)} />)}
+                                {product?.color?.map((color) => (
+                                    <FilterColor
+                                        key={color}
+                                        color={color}
+                                        selected={color === selectedColor}
+                                        onClick={() => setColor(color)}
+                                    />
+                                ))}
                             </div>
                         </div>
                         <div className={classes.filter}>
@@ -106,10 +122,9 @@ const Product = () => {
                                 displayEmpty
                                 onChange={(e) => setSize(e.target.value)}
                             >
-                                {
-                                    product?.size?.map(size => <MenuItem value={size}>{size}</MenuItem>)
-                                }
-
+                                {product?.size?.map((size) => (
+                                    <MenuItem key={size} value={size}>{size}</MenuItem>
+                                ))}
                             </Select>
                         </div>
                     </div>
@@ -125,7 +140,11 @@ const Product = () => {
                             </Typography>
                             <Add onClick={() => handleQuantity("inc")} />
                         </div>
-                        <Button variant="outlined" className={classes.btn} onClick={handleAddToCart} >
+                        <Button
+                            variant="outlined"
+                            className={classes.btn}
+                            onClick={handleAddToCart}
+                        >
                             add to cart
                         </Button>
                     </div>

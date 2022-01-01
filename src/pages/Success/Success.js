@@ -1,29 +1,29 @@
 import { Button, Typography } from "@material-ui/core";
+import { LocalActivity } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { postOrder } from "../../actions/order";
 
 import * as api from "../../api/order";
-
 import useStyles from "./styles";
 
 const Success = () => {
     const classes = useStyles();
     const location = useLocation();
     const cart = useSelector((state) => state.cart);
-    const dispatch = useDispatch();
-    const [orderId, setOrderId] = useState(null);
+    const { user } = useSelector((state) => state.auth);
 
-    console.log(location, "location");
+
+    const [orderId, setOrderId] = useState(null);
 
     useEffect(() => {
         const createOrder = async () => {
             const orders = cart?.products.map((orderItem) => orderItem.product.id);
 
             try {
+                console.log('createOrder')
                 const { data } = await api.postOrder({
-                    userId: "61afbe1ece5cc5dd40415532",
+                    userId: user.id,
                     orders,
                     amount: cart.total,
                     address: location.state.stripeData.billing_details.address,
@@ -34,18 +34,18 @@ const Success = () => {
             }
         };
 
-        if (cart && location.state) {
+        if (cart && location.state && user) {
             createOrder();
         }
-    }, [cart, location]);
+    }, [cart, location, user]);
     return (
         <div className={classes.root}>
             <Typography gutterBottom>
-                {orderId ? `Order has been created successfully. Your order number is ${orderId}` :
-                    `Successfull. Your order is being prepared...`
-                }
+                {orderId
+                    ? `Order has been created successfully. Your order number is ${orderId}`
+                    : `Successfull. Your order is being prepared...`}
             </Typography>
-            <Button variant="contained" color="primary" component={Link} to={'/home'}>
+            <Button variant="contained" color="primary" component={Link} to={"/home"}>
                 Go to Homepage
             </Button>
         </div>
