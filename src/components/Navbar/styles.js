@@ -4,6 +4,7 @@ import colors from "../../config/colors";
 
 export default makeStyles((theme) => ({
     appBar: {
+        boxShadow: ' none',
         // top: 30
     },
     offset: theme.mixins.toolbar,

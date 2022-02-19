@@ -2,7 +2,9 @@ import { Container, MenuItem, Select, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Products } from "../../components";
+import { MenuSelect, Products } from "../../components";
+import { ColorsOption } from "../../utility/colors";
+import { SizeOptions } from "../../utility/size";
 import useStyles from "./styles";
 
 const ProductsList = () => {
@@ -11,7 +13,7 @@ const ProductsList = () => {
     // const location = useLocation();
     // const cat = params.cat || location.pathname.split('/')[1]
 
-    const [filter, setFilter] = useState({ color: "", size: "" });
+    const [filter, setFilter] = useState({ color: [], size: [] });
     const [sort, setSort] = useState("newest");
 
     const handleFilter = (e) => {
@@ -32,43 +34,37 @@ const ProductsList = () => {
                         <Typography variant="body2" className={classes.filterText}>
                             Filter products:
                         </Typography>
-                        <Select
+
+                        <MenuSelect
+                            label="Color"
                             className={classes.select}
                             value={filter.color}
-                            // label="Color"
                             name="color"
                             variant="outlined"
-                            displayEmpty
+                            // displayEmpty
+                            multiple
                             onChange={handleFilter}
-                        >
-                            <MenuItem value={""} disabled>
-                                Color
-                            </MenuItem>
-                            <MenuItem value={"white"}>white</MenuItem>
-                            <MenuItem value={"black"}>black</MenuItem>
-                            <MenuItem value={"red"}>red</MenuItem>
-                            <MenuItem value={"blue"}>blue</MenuItem>
-                            <MenuItem value={"yellow"}>yellow</MenuItem>
-                            <MenuItem value={"green"}>green</MenuItem>
-                        </Select>
-                        <Select
-                            value={filter.size}
-                            // label="Color"
+                            options={ColorsOption.map((item) => ({
+                                value: item[0],
+                                label: item[1],
+                            })).sort((a, b) => (a.label < b.label ? -1 : 1))}
+                        />
+
+                        <MenuSelect
+                            label="Size"
                             className={classes.select}
+                            value={filter.size}
                             name="size"
                             variant="outlined"
-                            displayEmpty
+                            // displayEmpty
+                            multiple
                             onChange={handleFilter}
-                        >
-                            <MenuItem value={""} disabled>
-                                Size
-                            </MenuItem>
-                            <MenuItem value={"xs"}>XS</MenuItem>
-                            <MenuItem value={"s"}>S</MenuItem>
-                            <MenuItem value={"m"}>M</MenuItem>
-                            <MenuItem value={"l"}>L</MenuItem>
-                            <MenuItem value={"xl"}>XL</MenuItem>
-                        </Select>
+                            options={SizeOptions.map((item) => ({
+                                value: item,
+                                label: item,
+                            }))}
+                        />
+
                     </div>
                     <div className={classes.filterContent}>
                         <Typography variant="body2" className={classes.filterText}>

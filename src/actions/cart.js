@@ -8,7 +8,8 @@ import {
 export const getCartByUserId = (id) => async (dispatch) => {
     try {
         const { data } = await Api.getCartsByUserId(id);
-        dispatch({ type: GET_CART_BY_USERID, payload: data });
+        if (data) dispatch({ type: GET_CART_BY_USERID, payload: data });
+
     } catch (error) {
         console.log(error);
     }
@@ -17,6 +18,7 @@ export const getCartByUserId = (id) => async (dispatch) => {
 export const addToCart = (id, product) => async (dispatch) => {
     try {
         const { data } = await Api.addToCart(id, product);
+        console.log(data, 'add to cart')
         dispatch({ type: ADD_PRODUCT_TO_CART, payload: data.orderItem });
     } catch (error) {
         console.log(error);

@@ -19,7 +19,7 @@ const Product = ({ product: { img, id }, ...rest }) => {
                     {/* <img src={img} alt={"productImg"} className={classes.img} /> */}
                 </div>
 
-                <div className={classes.circle} />
+                {/* <div className={classes.circle} /> */}
                 <div className={classes.iconsLayer}>
                     <Avatar
                         className={classes.avatar}

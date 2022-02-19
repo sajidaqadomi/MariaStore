@@ -24,7 +24,7 @@ export default makeStyles((theme) => ({
         maxWidth: '100%',
         width: '100%',
         height: '100%',
-        objectFit: 'cover'
+        // objectFit: 'cover'
 
     },
     info: {

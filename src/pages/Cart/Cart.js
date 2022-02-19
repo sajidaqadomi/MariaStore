@@ -9,13 +9,13 @@ import {
 import { Add, Remove } from "@material-ui/icons";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import StripeCheckout from "react-stripe-checkout";
 
 import { updateOrderItemQ } from "../../actions/cart";
 import useStyles from "./styles";
 import { postPayment } from "../../actions/payment";
-import { useNavigate } from "react-router";
 
 const STRIPE_KEY = process.env.REACT_APP_STRIPE
 
@@ -25,7 +25,6 @@ const Color = styled.span`
   height: 20px;
   background-color: ${(props) => props.color};
   border-radius: 50%;
-
   margin: 0 5px;
 `;
 
@@ -93,7 +92,7 @@ const Cart = () => {
                                             <Box fontWeight="bold" component="span">
                                                 ID:
                                             </Box>
-                                            {item.product.id}
+                                            {item.product?.id}
                                         </Typography>
                                         <Color color={item.selectedColor} />
                                         <Typography className={classes.size}>

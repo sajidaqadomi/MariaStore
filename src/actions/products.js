@@ -6,11 +6,12 @@ import {
     START_LOADING_PROD,
 } from "../utility/actionTypes";
 
-export const getProducts = (catId) => async (dispatch) => {
+export const getProducts = (target, catId) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PROD });
 
-        const { data } = await api.getProducts(catId);
+        const { data } = await api.getProducts(target, catId);
+        console.log(data)
         dispatch({ type: FETCH_PRODUCT, payload: data });
 
         dispatch({ type: END_LOADING_PROD });

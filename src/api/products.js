@@ -1,11 +1,14 @@
 import { API } from "./api";
 
-export const getProducts = (catId) => {
-    return catId ? API.get(`/products?category=${catId}`) : API.get(`/products`);
+export const getProducts = (target, catId) => {
+    //console.log('api target', target)
+    return catId
+        ? API.get(`/products/?target=${target}&category=${catId}`)
+        : API.get(`/products/?target=${target}`);
 };
 
 export const getProductsByCategory = (category) => {
-    return API.get(`/products?category=${category}`);
+    return API.get(`/products/?category=${category}`);
 };
 
 export const getProductById = (id) => {

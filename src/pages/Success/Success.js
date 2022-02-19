@@ -18,13 +18,13 @@ const Success = () => {
 
     useEffect(() => {
         const createOrder = async () => {
-            const orders = cart?.products.map((orderItem) => orderItem.product.id);
+            const orders = cart?.products.map((orderItem) => orderItem._id);
 
             try {
                 console.log('createOrder')
                 const { data } = await api.postOrder({
                     userId: user.id,
-                    orders,
+                    products: orders,
                     amount: cart.total,
                     address: location.state.stripeData.billing_details.address,
                 });

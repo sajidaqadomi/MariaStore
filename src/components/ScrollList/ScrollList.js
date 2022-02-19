@@ -1,32 +1,37 @@
 import React from "react";
 import Slider from "react-slick";
 
-const ScrollList = ({ children, rest }) => {
+const ScrollList = ({ children, slidesNumber, rest }) => {
     const settings = {
         dots: false,
-        arrows: false,
+        arrows: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 2.25,
+        slidesToShow: Math.min(slidesNumber, 2.25),
         slidesToScroll: 1,
         centerMode: true,
+        draggable: false,
         focusOnSelect: true,
         swipeToSlide: true,
+        rows: 1,
         responsive: [
             {
                 breakpoint: 960,
                 settings: {
-                    slidesToShow: 1.15,
+                    slidesToShow: Math.min(slidesNumber, 1.25),
                     slidesToScroll: 1,
                     infinite: true,
+                    arrows: false,
                 },
             },
         ],
     };
     return (
+
         <Slider {...settings} {...rest}>
             {children}
         </Slider>
+
     );
 };
 

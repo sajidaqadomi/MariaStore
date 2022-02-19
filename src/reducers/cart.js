@@ -10,6 +10,7 @@ export const cart = (
 ) => {
     switch (action.type) {
         case GET_CART_BY_USERID:
+            //  console.log(action.payload, "payload")
             return {
                 ...action.payload,
                 products: action.payload.products.map((orderItem) => ({
@@ -17,12 +18,13 @@ export const cart = (
                     total: orderItem.quantity * orderItem.product.price,
                 })),
                 total: action.payload.products.reduce((prev, currOrder) => {
-                    return prev + currOrder.quantity * currOrder.product.price;
+                    return prev + (currOrder.quantity * currOrder.product.price);
                 }, 0),
             };
         case ADD_PRODUCT_TO_CART:
             const proTotal = action.payload.quantity * action.payload.product.price;
             return {
+                ...state,
                 products: [...state.products, { ...action.payload, total: proTotal }],
                 quantity: state.quantity + 1,
                 total: state.total + proTotal,

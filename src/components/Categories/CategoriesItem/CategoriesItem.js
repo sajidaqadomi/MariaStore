@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import useStyles from "./styles";
 
-const CategoriesItem = ({ item: { img, title, cat }, ...rest }) => {
+const CategoriesItem = ({ item: { img, title, cat, targetGender: target }, ...rest }) => {
     const classes = useStyles();
     return (
         <div className={classes.imgListItem} {...rest} >
@@ -14,7 +14,7 @@ const CategoriesItem = ({ item: { img, title, cat }, ...rest }) => {
                     <Typography variant="h2" className={classes.title}>
                         {title}
                     </Typography>
-                    <Link to={`/products/${cat}`} style={{ textDecoration: "none" }}>
+                    <Link to={`/products/${target}/${title}`} style={{ textDecoration: "none" }}>
                         <Button variant="contained">shop now</Button>
                     </Link>
                 </div>

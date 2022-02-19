@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import colors from "../../config/colors";
 
 export default makeStyles((theme) => ({
 
@@ -15,13 +16,22 @@ export default makeStyles((theme) => ({
     },
     slider: {
         marginTop: theme.spacing(3),
+        '& .slick-prev,& .slick-next': {
+            '&:before': {
+                color: colors.black
+
+            }
+
+        },
+
         '& .slick-list': {
             // margin: '0 -8px',
             '& .slick-slide': {
                 '& > div': {
                     margin: '0 8px'
                 }
-            }
+            },
+
         }
 
     }

@@ -5,11 +5,11 @@ import {
     START_LOADING_CAT,
 } from "../utility/actionTypes";
 
-export const getCategories = () => async (dispatch) => {
+export const getCategories = (query) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_CAT });
 
-        const { data } = await api.getCategory();
+        const { data } = await api.getCategory(query);
         dispatch({ type: FETCH_CATEGORY, payload: data });
 
         dispatch({ type: END_LOADING_CAT });

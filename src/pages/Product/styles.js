@@ -11,16 +11,19 @@ export default makeStyles((theme) => ({
         }
     },
     imgContainer: {
-        flex: '1'
+        flex: '1',
+        // width: '100%',
+        height: '400px',
+        [theme.breakpoints.down('sm')]: {
+            height: '350px'
+        }
 
     },
     img: {
         width: '100%',
-        height: '80vh',
-        objectFit: 'cover',
-        [theme.breakpoints.down('sm')]: {
-            height: '30vh'
-        }
+        height: '100%',
+        // objectFit: 'cover',
+
     },
     productInfo: {
         flex: '1',

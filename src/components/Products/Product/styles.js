@@ -21,7 +21,7 @@ export default makeStyles((theme) => ({
         width: '100%',
         height: '100%',
         position: 'relative',
-        padding: theme.spacing(3),
+        padding: theme.spacing(1),
         backgroundColor: '#f5fbfd',
         display: 'flex',
         alignItems: 'center',
@@ -34,12 +34,12 @@ export default makeStyles((theme) => ({
         }
     },
     imgContainer: {
-        height: '75%',
+        height: '100%',
         width: '100%',
         position: 'relative',
         backgroundImage: ({ img }) => `url(${img})`,
         backgroundPosition: 'center',
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         zIndex: 2,
         [theme.breakpoints.down('md')]: {
@@ -54,23 +54,23 @@ export default makeStyles((theme) => ({
         objectFit: 'cover'
 
     },
-    circle: {
-        width: 200,
-        height: 200,
-        backgroundColor: colors.white,
-        position: 'absolute',
-        borderRadius: '50%',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%,-50%)',
-        zIndex: 1,
-        [theme.breakpoints.down('md')]: {
-            width: '140px',
-            height: '140px'
-        }
+    // circle: {
+    //     width: 200,
+    //     height: 200,
+    //     backgroundColor: colors.white,
+    //     position: 'absolute',
+    //     borderRadius: '50%',
+    //     top: '50%',
+    //     left: '50%',
+    //     transform: 'translate(-50%,-50%)',
+    //     zIndex: 1,
+    //     [theme.breakpoints.down('md')]: {
+    //         width: '140px',
+    //         height: '140px'
+    //     }
 
 
-    },
+    // },
 
     avatar: {
         backgroundColor: colors.white,
