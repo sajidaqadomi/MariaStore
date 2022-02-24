@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { BottomNav, Navbar } from "..";
+//import { BottomNav, Navbar } from "..";
 import { mainCategories } from "../../utility/mainCategories";
 import { getProducts } from "../../actions/products";
 import { getCategories } from "../../actions/categories";
+import { Paper } from "@material-ui/core";
+import Navbar from "./Navbar";
+import BottomNav from "./BottomNav";
+import { TargetContext } from "../../contexts/TargetContext";
 
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [target, setTarget] = useState("women");
+
+    const { target } = useContext(TargetContext)
     const [mainCat, setMainCat] = useState(0);
     const [isAtHome, setIsAtHome] = useState(true);
 
-    const hanleChangeTarget = (e) => {
-        let target = e.target.value;
-        setTarget((c) => target);
-    };
+
 
     const handleChangeMainCat = (e, v) => {
         setMainCat((prev) => v);
@@ -27,7 +29,6 @@ const Header = () => {
     useEffect(() => {
         if (location) {
             let lastPath = location.pathname.split("/").slice(-1)[0];
-            console.log(lastPath, "path");
 
             if (lastPath === "women" || lastPath === "men") {
                 setIsAtHome(true);
@@ -37,25 +38,24 @@ const Header = () => {
         }
     }, [location]);
 
-    useEffect(() => {
-        if (target) {
-            // console.log('target', target, mainCategories[mainCat])
-            navigate(`/home/${target}`);
-            dispatch(getProducts(target));
-        }
-    }, [target]);
+    // useEffect(() => {
+    //     if (target) {
+    //         navigate(`/home/${target}`);
+    //         dispatch(getProducts(target));
+    //     }
+    // }, [target, dispatch]);
 
     useEffect(() => {
         if (target && mainCategories[mainCat]) {
-            // console.log("target", target, mainCategories[mainCat]);
             dispatch(
                 getCategories({ cat: mainCategories[mainCat], targetGender: target })
             );
         }
-    }, [target, mainCat]);
+    }, [target, mainCat, dispatch]);
+
     return (
-        <>
-            <Navbar hanleChangeTarget={hanleChangeTarget} target={target} />
+        <Paper square>
+            <Navbar />
             {isAtHome && (
                 <BottomNav
                     value={mainCat}
@@ -63,7 +63,7 @@ const Header = () => {
                     data={mainCategories}
                 />
             )}
-        </>
+        </Paper>
     );
 };
 

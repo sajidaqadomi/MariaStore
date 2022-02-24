@@ -6,10 +6,17 @@ import StoreProvider from './store';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import { BrowserRouter } from 'react-router-dom';
+import TargetContextProvider from './contexts/TargetContext';
+
 
 ReactDOM.render(
   <StoreProvider>
-    <App />
+    <BrowserRouter>
+      <TargetContextProvider>
+        <App />
+      </TargetContextProvider>
+    </BrowserRouter>
   </StoreProvider>,
   document.getElementById('root')
 );

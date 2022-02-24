@@ -1,40 +1,35 @@
 import {
     AppBar,
     Badge,
-    InputBase,
-    MenuItem,
-    Select,
+    Container,
     Toolbar,
     Typography,
 } from "@material-ui/core";
-import { SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import { ShoppingCartOutlined } from "@material-ui/icons";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 import useStyles from "./styles";
-import * as storage from "../../utility/cache";
-import { signOut } from "../../actions/user";
-// import { getProducts } from "../../actions/products";
-// import { getCategories } from "../../actions/categories";
-import { BottomNav } from "..";
-// import { mainCategories } from '../../utility/mainCategories';
+import * as storage from "../../../utility/cache";
+import { signOut } from "../../../actions/user";
+import FilterSide from "./FilterSide";
+import { TargetContext } from "../../../contexts/TargetContext";
 
-const Navbar = ({ hanleChangeTarget, target = 'women' }) => {
+const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-
-    // const [target, setTarget] = useState('women')
-    // const [mainCat, setMainCat] = useState(0);
-
+    const location = useLocation();
+    const navigate = useNavigate()
+    const { target } = useContext(TargetContext)
     const {
         cart,
         auth: { user },
     } = useSelector((state) => state);
-    const location = useLocation();
-    const navigate = useNavigate()
-    // console.log(cart, user, "cart")
+    const [searchValue, setSearchValue] = useState('');
+
+
     useEffect(() => {
         let token = storage.get("userToken");
         if (token) {
@@ -43,54 +38,32 @@ const Navbar = ({ hanleChangeTarget, target = 'women' }) => {
         }
     }, [location]);
 
+    useEffect(() => {
+        let token = storage.get("userToken");
+        if (token) {
+            navigate(`/home/${target}`)
+
+        }
+
+    }, [user]);
+
+    // const handleChangeSearch = () => {
+
+    // }
+
     const logOut = () => {
         dispatch(signOut());
     };
 
-    // const hanleChangeTarget = (e) => {
-    //     let target = e.target.value
-    //     setTarget((c) => target)
-    // }
 
-    // const handleChangeMainCat = (e, v) => {
-    //     setMainCat((prev) => v)
-
-    // }
-
-    // useEffect(() => {
-    //     if (target) {
-
-    //         // console.log('target', target, mainCategories[mainCat])
-    //         navigate(`/home/${target}`)
-    //         dispatch(getProducts(target))
-
-    //     }
-
-    // }, [target]);
-
-    // useEffect(() => {
-    //     if (target && mainCategories[mainCat]) {
-
-    //         console.log('target', target, mainCategories[mainCat])
-    //         dispatch(getCategories({ cat: mainCategories[mainCat], targetGender: target }))
-
-    //     }
-
-    // }, [target, mainCat]);
     return (
         <>
             <AppBar className={classes.appBar} position="fixed">
                 <Toolbar className={classes.toolbar}>
                     <div className={classes.leftSide}>
-                        <Select value={target} onChange={hanleChangeTarget} className={classes.select}>
-                            <MenuItem value={"women"}>Women</MenuItem>
-                            <MenuItem value={"men"}>Men</MenuItem>
-                        </Select>
-                        <div className={classes.search}>
-                            <InputBase placeholder="Search" className={classes.inputSearch} />
-                            <SearchOutlined className={classes.searchIcon} />
-                        </div>
+                        <FilterSide />
                     </div>
+
                     <div className={classes.centerSide}>
                         <Typography
                             component={Link}
@@ -133,6 +106,13 @@ const Navbar = ({ hanleChangeTarget, target = 'women' }) => {
             {location.pathname !== "/register" && location.pathname !== "/login" && (
                 <div className={classes.offset} />
             )}
+            <div className={classes.mobArea} >
+                <Container maxWidth='xl'>
+                    <div className={classes.mobContent}>
+                        <FilterSide />
+                    </div>
+                </Container>
+            </div>
         </>
     );
 };

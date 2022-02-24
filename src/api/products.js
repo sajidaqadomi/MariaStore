@@ -10,6 +10,9 @@ export const getProducts = (target, catId) => {
 export const getProductsByCategory = (category) => {
     return API.get(`/products/?category=${category}`);
 };
+export const getProductsBySearch = (searchValue) => {
+    return API.get(`/products/search?searchQuery=${searchValue}`);
+};
 
 export const getProductById = (id) => {
     return API.get(`/products/${id}`);

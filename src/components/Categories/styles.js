@@ -34,6 +34,12 @@ export default makeStyles((theme) => ({
 
         }
 
+    },
+    sectionTitle: {
+        display: 'block',
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }
     }
 
 

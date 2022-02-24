@@ -41,7 +41,7 @@ export const signIn = (user, navigate) => async (dispatch) => {
                 type: AUTH,
                 payload: { id: user.id, isAdmi: user.isAdmin, userName: user.userName },
             });
-            navigate("/");
+            // navigate("/");
         }
 
         dispatch({ type: AUTH_END_LOADING });

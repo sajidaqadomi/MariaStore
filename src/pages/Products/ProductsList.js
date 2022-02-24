@@ -1,20 +1,41 @@
 import { Container, MenuItem, Select, Typography } from "@material-ui/core";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams, useLocation } from "react-router-dom";
 
 import { MenuSelect, Products } from "../../components";
+import { TargetContext } from "../../contexts/TargetContext";
 import { ColorsOption } from "../../utility/colors";
 import { SizeOptions } from "../../utility/size";
 import useStyles from "./styles";
 
 const ProductsList = () => {
     const classes = useStyles();
-    const { cat } = useParams();
-    // const location = useLocation();
-    // const cat = params.cat || location.pathname.split('/')[1]
+    const { cat: title } = useParams();
+    const { categories } = useSelector((state) => state.categories);
+    const [currCategory, setCurrCategory] = useState({});
+    const { target } = useContext(TargetContext)
 
     const [filter, setFilter] = useState({ color: [], size: [] });
     const [sort, setSort] = useState("newest");
+
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+    };
+    const searchQuery = useQuery().get("searchQuery");
+
+    useEffect(() => {
+        if (title && categories.length) {
+            let currentCat = categories.filter(
+                (category) => category.title === title
+            );
+            setCurrCategory(currentCat[0]);
+        }
+    }, [categories, title]);
+
+    useEffect(() => {
+        console.log(currCategory)
+    }, [currCategory]);
 
     const handleFilter = (e) => {
         setFilter((prevFilter) => ({
@@ -27,7 +48,10 @@ const ProductsList = () => {
         <>
             <Container>
                 <Typography variant="h2" component="h2" className={classes.title}>
-                    {cat}
+                    {searchQuery ? (`Your search results for${searchQuery}`) : (target === 'men' ? `Men's ${title}` : `Women's ${title}`)}
+                </Typography>
+                <Typography variant="p" className={classes.desc} component='p'>
+                    {searchQuery ? `` : currCategory?.cat}
                 </Typography>
                 <div className={classes.filtersContainer}>
                     <div className={classes.filterContent}>
@@ -64,7 +88,6 @@ const ProductsList = () => {
                                 label: item,
                             }))}
                         />
-
                     </div>
                     <div className={classes.filterContent}>
                         <Typography variant="body2" className={classes.filterText}>
@@ -86,7 +109,7 @@ const ProductsList = () => {
                     </div>
                 </div>
             </Container>
-            <Products filter={filter} sort={sort} />
+            <Products filter={filter} sort={sort} catId={currCategory?.id} searchQuery={searchQuery} />
         </>
     );
 };

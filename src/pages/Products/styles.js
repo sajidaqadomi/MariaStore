@@ -2,8 +2,20 @@ import { makeStyles } from "@material-ui/core";
 
 export default makeStyles((theme) => ({
     title: {
-        margin: '20px 0',
-        textTransform: 'capitalize'
+        margin: `${theme.spacing(3)}px 0`,
+        textTransform: 'capitalize',
+        //width: '50%',
+        /// margin: 'auto',
+        textAlign: 'center'
+
+
+    },
+    desc: {
+        lineHeight: '1.75',
+        width: "80%",
+        margin: 'auto',
+        textAlign: "center",
+        marginBottom: theme.spacing(3),
 
     },
     select: {

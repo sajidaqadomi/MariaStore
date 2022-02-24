@@ -21,6 +21,21 @@ export const getProducts = (target, catId) => async (dispatch) => {
     }
 };
 
+export const getProductsBySearch = (value) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING_PROD });
+
+        const { data } = await api.getProductsBySearch(value);
+        console.log(data, 'bysaerch')
+        dispatch({ type: FETCH_PRODUCT, payload: data });
+
+        dispatch({ type: END_LOADING_PROD });
+    } catch (error) {
+        console.log(error);
+        dispatch({ type: END_LOADING_PROD });
+    }
+};
+
 export const getProductsById = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PROD });
