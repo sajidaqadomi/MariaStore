@@ -37,6 +37,7 @@ export default makeStyles((theme) => ({
     },
     sectionTitle: {
         display: 'block',
+        marginBottom: theme.spacing(2),
         [theme.breakpoints.down('sm')]: {
             display: 'none'
         }

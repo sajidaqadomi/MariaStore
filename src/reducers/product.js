@@ -6,12 +6,12 @@ import {
 } from "../utility/actionTypes";
 
 export const products = (
-    state = { isLoading: true, products: [], product: {} },
+    state = { isLoading: true, products: null, product: {} },
     action
 ) => {
     switch (action.type) {
         case START_LOADING_PROD:
-            return { ...state, isLoading: true };
+            return { ...state, isLoading: true, products: null, product: {} };
 
         case END_LOADING_PROD:
             return { ...state, isLoading: false };

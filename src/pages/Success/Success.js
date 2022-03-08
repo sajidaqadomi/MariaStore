@@ -1,7 +1,8 @@
 import { Button, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { emptyCartByUserId } from "../../actions/cart";
 
 import * as api from "../../api/order";
 import useStyles from "./styles";
@@ -9,6 +10,7 @@ import useStyles from "./styles";
 const Success = () => {
     const classes = useStyles();
     const location = useLocation();
+    const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const { user } = useSelector((state) => state.auth);
 
@@ -25,7 +27,10 @@ const Success = () => {
                     amount: cart.total,
                     address: location.state.stripeData.billing_details.address,
                 });
-                if (data) setOrderId(data.id);
+                if (data) {
+                    setOrderId(data.id)
+                    dispatch(emptyCartByUserId(user.id))
+                };
             } catch (error) {
                 console.log(error);
             }

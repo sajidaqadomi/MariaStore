@@ -34,7 +34,7 @@ const Navbar = () => {
         let token = storage.get("userToken");
         if (token) {
             let decodeToken = jwt_decode(token);
-            if (decodeToken.exp < new Date().getTime() / 1000) logOut();
+            if (decodeToken.exp < ((new Date().getTime()) / 1000)) logOut();
         }
     }, [location]);
 

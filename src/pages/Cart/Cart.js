@@ -3,7 +3,8 @@ import {
     Button,
     Container,
     Divider,
-    Link,
+    IconButton,
+    //Link,
     Typography,
 } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
@@ -13,11 +14,18 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import StripeCheckout from "react-stripe-checkout";
 
-import { updateOrderItemQ } from "../../actions/cart";
+import {
+    emptyCartByUserId,
+    removeOrderItem,
+    updateOrderItemQ,
+} from "../../actions/cart";
 import useStyles from "./styles";
 import { postPayment } from "../../actions/payment";
+import { Loading } from "../../components";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-const STRIPE_KEY = process.env.REACT_APP_STRIPE
+const STRIPE_KEY = process.env.REACT_APP_STRIPE;
 
 const Color = styled.span`
   display: block;
@@ -30,7 +38,8 @@ const Color = styled.span`
 
 const Cart = () => {
     const classes = useStyles();
-    const { products, total } = useSelector((state) => state.cart);
+    const { products, total, isLoading } = useSelector((state) => state.cart);
+    const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -44,12 +53,29 @@ const Cart = () => {
     };
 
     const onToken = (token) => {
-        if (token)
-            dispatch(
-                postPayment({ tokenId: token.id, amount: total * 100 }, navigate)
-            );
+        if (token) console.log(token, "token");
+        dispatch(postPayment({ tokenId: token.id, amount: total * 100 }, navigate));
     };
-    if (!products.length) return "";
+
+    const clearCart = () => {
+        user?.id && dispatch(emptyCartByUserId(user.id));
+    };
+
+    const removeItem = (id) => {
+        dispatch(removeOrderItem(id));
+    };
+
+    if (isLoading) return <Loading />;
+
+    if (!products.length)
+        return (
+            <div className={classes.root}>
+                <Typography gutterBottom>Your Cart is Empty.</Typography>
+                <Button variant="contained" color="primary" component={Link} to={"/"}>
+                    Go to Homepage
+                </Button>
+            </div>
+        );
 
     return (
         <Container maxWidth="xl">
@@ -57,22 +83,24 @@ const Cart = () => {
                 your bag
             </Typography>
             <div className={classes.top}>
-                <Button variant="outlined" className={classes.btn}>
-                    continue shopping
-                </Button>
+                <Link to="/" className={classes.btnLink}>
+                    <Button variant="outlined" className={classes.btn}>
+                        continue shopping
+                    </Button>
+                </Link>
                 <div className={classes.links}>
-                    <Link className={classes.link}>shopping bage(2)</Link>
-                    <Link className={classes.link}>your wishlist (0)</Link>
+                    {/* <Link className={classes.link}>shopping bage(2)</Link>
+                    <Link className={classes.link}>your wishlist (0)</Link> */}
                 </div>
-                <Button variant="contained" className={classes.btn}>
-                    checkout now
+                <Button variant="contained" className={classes.btn} onClick={clearCart}>
+                    clear cart
                 </Button>
             </div>
             <div className={classes.bottom}>
                 <div className={classes.productsContainer}>
                     {products?.map((item) => (
-                        <>
-                            <div className={classes.product} key={item._id}>
+                        <div key={item._id}>
+                            <div className={classes.product}>
                                 <div className={classes.productDetails}>
                                     <div className={classes.productImg}>
                                         <img
@@ -103,29 +131,52 @@ const Cart = () => {
                                         </Typography>
                                     </div>
                                 </div>
-                                <div className={classes.priceDetails}>
-                                    <div className={classes.amountContainer}>
-                                        <Add
-                                            onClick={() =>
-                                                handleOrderQuantity("inc", item.id, item.quantity)
-                                            }
-                                        />
-                                        <Typography component="span" className={classes.amount}>
-                                            {item.quantity}
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <div className={classes.priceDetails}>
+                                        <div className={classes.amountContainer}>
+                                            <IconButton
+                                                onClick={() =>
+                                                    handleOrderQuantity("inc", item.id, item.quantity)
+                                                }
+                                            >
+                                                <Add />
+                                            </IconButton>
+
+                                            <Typography component="span" className={classes.amount}>
+                                                {item.quantity}
+                                            </Typography>
+                                            <IconButton
+                                                onClick={() =>
+                                                    handleOrderQuantity("dec", item.id, item.quantity)
+                                                }
+                                            >
+                                                {" "}
+                                                <Remove />
+                                            </IconButton>
+                                        </div>
+                                        <Typography className={classes.price}>
+                                            $ {item.total}
                                         </Typography>
-                                        <Remove
-                                            onClick={() =>
-                                                handleOrderQuantity("dec", item.id, item.quantity)
-                                            }
-                                        />
                                     </div>
-                                    <Typography className={classes.price}>
-                                        $ {item.total}
-                                    </Typography>
+                                    <div>
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={() => removeItem(item._id)}
+                                        >
+                                            Remove
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                             <Divider />
-                        </>
+                        </div>
                     ))}
                 </div>
                 <div className={classes.summary}>

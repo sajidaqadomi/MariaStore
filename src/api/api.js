@@ -17,15 +17,22 @@ const get = API.get; //override get to support cache
 API.get = async (url, params, axiosConfig) => {
     try {
         const response = await get(url, params, axiosConfig);
+        // console.log(response, 'inapi')
+
         if (response.data) {
             storage.store(url, JSON.stringify(response.data));
             return response;
         }
         let data = JSON.parse(storage.get(url));
+        // console.log(data, 'datainapi')
         return data ? { data } : response;
     } catch (error) {
+        //console.log(error?.response?.data.error, 'in api')
         let data = JSON.parse(storage.get(url));
-        return data ? { data } : { error: error };
+        let rootError = error?.response?.data?.error;
+        // console.log(rootError, typeof (rootError), data, 'rootError')
+        let currError = typeof rootError === "string" ? rootError : "Network Error";
+        return data ? { data } : { error: currError };
     }
 };
 

@@ -3,9 +3,9 @@ import colors from "../../config/colors";
 
 export default makeStyles((theme) => ({
     content: {
-        height: '60vh',
+        height: '100vh',
         backgroundColor: colors.light,
-        margin: `${theme.spacing(3)}px 0`,
+        // margin: `${theme.spacing(3)}px 0`,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

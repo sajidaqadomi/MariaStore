@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 //import { BottomNav, Navbar } from "..";
 import { mainCategories } from "../../utility/mainCategories";
-import { getProducts } from "../../actions/products";
 import { getCategories } from "../../actions/categories";
 import { Paper } from "@material-ui/core";
 import Navbar from "./Navbar";

@@ -52,6 +52,7 @@ export const signIn = (user, navigate) => async (dispatch) => {
 };
 
 export const signOut = () => (dispatch) => {
+    console.log('signOut')
     storage.clear();
     dispatch({ type: SIGN_OUT });
 };

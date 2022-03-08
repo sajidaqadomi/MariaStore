@@ -14,15 +14,15 @@ const EmptyPage = () => {
   // }, [location])
 
   return (
-    <Container maxWidth='xl' >
-      <div className={classes.content}>
-        <Typography variant='h3' gutterBottom className={classes.title} >{state.value}</Typography>
-        <Button variant="contained" color="primary" component={Link} to={"/"}>
-          Go to Homepage
-        </Button>
-      </div>
 
-    </Container>
+    <div className={classes.content}>
+      <Typography variant='h3' gutterBottom className={classes.title} >{state.value}</Typography>
+      <Button variant="contained" color="primary" component={Link} to={"/"}>
+        Go to Homepage
+      </Button>
+    </div>
+
+
   )
 }
 

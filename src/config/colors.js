@@ -6,7 +6,8 @@ const colors = {
     medium: "#6e6969",
     light: "#f8f4f4",
     dark: "#0c0c0c",
-    // danger: '#ff5262'
+    lightDanger: "#ffe4e1",
+    danger: '#ff5262'
 };
 
 export default colors;

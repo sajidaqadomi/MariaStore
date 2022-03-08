@@ -66,6 +66,7 @@ export default makeStyles((theme) => ({
     },
     colors: {
         display: 'flex',
+        marginRight: theme.spacing(3),
 
     },
     select: {
@@ -84,6 +85,7 @@ export default makeStyles((theme) => ({
     amountContainer: {
         display: 'flex',
         alignItems: 'center',
+        marginRight: theme.spacing(3),
 
     },
     amount: {

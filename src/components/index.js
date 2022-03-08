@@ -1,6 +1,7 @@
 export { default as Announcement } from './Announcement'
 export { default as Breadcrumb } from './Breadcrumb'
 export { default as Categories } from './Categories'
+export { default as ErrorMessage } from './ErrorMessage'
 export { default as Footer } from './Footer'
 export { default as FormSubmit } from './FormSubmit'
 export { default as FormInput } from './FormInput'

@@ -1,28 +1,50 @@
 import { Container } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import useStyles from "./styles";
 import CategoriesItem from "./CategoriesItem/CategoriesItem";
-import { ScrollList, SectionTitle } from "..";
+import { ErrorMessage, Loading, ScrollList, SectionTitle } from "..";
+import { useState } from "react";
 
 const Categories = () => {
     const classes = useStyles();
-    const categories = useSelector((state) => state.categories.categories);
+    const { categories, isLoading } = useSelector((state) => state.categories);
+    const { errors } = useSelector((state) => state.dataStatus);
+    const [catError, setCatError] = useState(undefined);
 
-    if (categories.isLoading) return "loading...";
+    useEffect(() => {
+        if (errors.length) {
+            let catError = errors.filter((err) => err.type === 'categories')
+            // console.log(catError, 'catError')
+            setCatError(...catError)
+        } else {
+            setCatError(undefined)
+        }
+    }, [errors]);
+
+
+    // useEffect(() => {
+    //     console.log(categories, "categories in cat")
+
+    // }, [categories])
+
+    const CategoriesList = () => (<Container maxWidth="lg">
+        <div className={classes.slider}>
+            <ScrollList slidesNumber={categories.length}>
+                {categories.length && categories.map((item) => (
+                    <CategoriesItem key={item._id} item={item} />
+                ))}
+            </ScrollList>
+        </div>
+    </Container>)
+
+    if (isLoading) return <Loading />;
     return (
         <>
             <SectionTitle title="Shop by Category" className={classes.sectionTitle} />
-            <Container maxWidth="lg">
-                <div className={classes.slider}>
-                    <ScrollList slidesNumber={categories.length}>
-                        {categories.map((item) => (
-                            <CategoriesItem key={item._id} item={item} />
-                        ))}
-                    </ScrollList>
-                </div>
-            </Container>
+            {catError ? (<ErrorMessage msg={catError.error} title={catError.errorTitle} />) : (<CategoriesList />)}
+
         </>
     );
 };

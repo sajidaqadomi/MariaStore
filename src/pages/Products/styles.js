@@ -2,20 +2,23 @@ import { makeStyles } from "@material-ui/core";
 
 export default makeStyles((theme) => ({
     title: {
-        margin: `${theme.spacing(3)}px 0`,
+        margin: `${theme.spacing(3)}px 0 ${theme.spacing(2)}px`,
         textTransform: 'capitalize',
-        //width: '50%',
-        /// margin: 'auto',
-        textAlign: 'center'
-
-
+        textAlign: 'center',
+    },
+    searchTitle: {
+        fontSize: '16px',
+        wordSpacing: "6px",
     },
     desc: {
-        lineHeight: '1.75',
+
         width: "80%",
         margin: 'auto',
         textAlign: "center",
         marginBottom: theme.spacing(3),
+    },
+    searchDesc: {
+        lineHeight: '1.75',
 
     },
     select: {
@@ -29,38 +32,38 @@ export default makeStyles((theme) => ({
 
     },
 
-    filtersContainer: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        [theme.breakpoints.down('sm')]: {
+    // filtersContainer: {
+    //     display: 'flex',
+    //     justifyContent: 'space-between',
+    //     [theme.breakpoints.down('sm')]: {
 
 
-        }
-    },
-    filterText: {
-        marginRight: 20,
-        fontWeight: 600,
-        fontSize: '20px',
-        [theme.breakpoints.down('sm')]: {
-            marginRight: 0,
-            fontSize: '18px'
-        }
+    //     }
+    // },
+    // filterText: {
+    //     marginRight: 20,
+    //     fontWeight: 600,
+    //     fontSize: '20px',
+    //     [theme.breakpoints.down('sm')]: {
+    //         marginRight: 0,
+    //         fontSize: '18px'
+    //     }
 
-    },
-    filterContent: {
-        display: 'flex',
-        // justifyContent: 'center',
-        alignItems: 'center',
-        [theme.breakpoints.down('sm')]: {
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            marginRight: '8px',
-        }
-    },
-    rightFilter: {
-        display: 'flex'
+    // },
+    // filterContent: {
+    //     display: 'flex',
+    //     // justifyContent: 'center',
+    //     alignItems: 'center',
+    //     [theme.breakpoints.down('sm')]: {
+    //         flexDirection: 'column',
+    //         alignItems: 'flex-start',
+    //         marginRight: '8px',
+    //     }
+    // },
+    // rightFilter: {
+    //     display: 'flex'
 
-    }
+    // }
 
 
 }))

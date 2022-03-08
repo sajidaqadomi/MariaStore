@@ -77,6 +77,11 @@ export default makeStyles((theme) => ({
         color: colors.black,
         margin: 10,
         transition: 'all .5s ease',
+        cursor: 'pointer',
+        '&.Mui-disabled': {
+            backgroundColor: alpha(`${colors.white}`, 0.4),
+
+        },
         '&:hover': {
             transform: 'scale(1.2)',
             backgroundColor: '#e9f5f5'

@@ -1,17 +1,33 @@
-import { Avatar, ImageListItem } from "@material-ui/core";
+import { Avatar, Button, IconButton, ImageListItem } from "@material-ui/core";
 import {
     FavoriteBorder,
     Search,
     ShoppingCartOutlined,
 } from "@material-ui/icons";
 import React from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import useStyles from "./styles";
 
-const Product = ({ product: { img, id }, ...rest }) => {
-    // console.log(img, id)
+const Product = ({ product: { img, _id }, ...rest }) => {
     const classes = useStyles({ img });
+    const {
+        auth: { user }
+    } = useSelector((state) => state);
+
+    // useEffect(() => {
+    //     console.log(user, 'user')
+    // }, [user]);
+
+    // useEffect(() => {
+    //     if (id) console.log('productid', id)
+
+    // }, [id]);
+
+
+
     return (
         <ImageListItem cols={2} {...rest}>
             <div className={classes.container}>
@@ -20,27 +36,33 @@ const Product = ({ product: { img, id }, ...rest }) => {
                 </div>
 
                 {/* <div className={classes.circle} /> */}
-                <div className={classes.iconsLayer}>
+                {_id && <div className={classes.iconsLayer}>
                     <Avatar
                         className={classes.avatar}
-                        onClick={() => console.log("click")}
+                        component={Link}
+                        to={`/product/${_id}`}
+                    // className={classes.avatar}
+                    // onClick={() => console.log("click")}
                     >
                         <ShoppingCartOutlined className={classes.icon} />
                     </Avatar>
                     <Avatar
                         className={classes.avatar}
-                        component={Link}
-                        to={`/product/${id}`}
+                        component={IconButton}
+                        disabled={!user}
+
+                        onClick={() => console.log("click")}
                     >
-                        <Search className={classes.icon} />
+                        <FavoriteBorder className={classes.icon} />
+
                     </Avatar>
-                    <Avatar
+                    {/* <Avatar
                         className={classes.avatar}
                         onClick={() => console.log("click")}
                     >
                         <FavoriteBorder className={classes.icon} />
-                    </Avatar>
-                </div>
+                    </Avatar> */}
+                </div>}
             </div>
         </ImageListItem>
     );

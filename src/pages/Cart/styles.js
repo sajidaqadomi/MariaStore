@@ -3,6 +3,14 @@ import { makeStyles } from "@material-ui/core";
 import colors from '../../config/colors'
 
 export default makeStyles((theme) => ({
+    root: {
+        height: "90vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        backgroundColor: colors.light
+    },
     title: {
         fontWeight: 300,
         textAlign: 'center',
@@ -38,6 +46,10 @@ export default makeStyles((theme) => ({
         }
 
     },
+    btnLink: {
+        textDecoration: 'none'
+
+    },
     link: {
         textDecoration: 'underline',
         margin: '0 10px',
@@ -60,8 +72,11 @@ export default makeStyles((theme) => ({
     product: {
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: theme.spacing(2),
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
+            alignItems: 'stretch'
         }
 
     },
@@ -77,15 +92,27 @@ export default makeStyles((theme) => ({
         padding: '20px'
 
     },
-    img: {
+    productImg: {
         width: '200px',
+        height: '240px',
+
+    },
+    img: {
+        width: '100%',
+        maxWidth: '100%',
+        height: '100%'
     },
     priceDetails: {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        flex: '1'
+        flex: '1',
+        marginRight: theme.spacing(1),
+        [theme.breakpoints.down('sm')]: {
+            flex: 'unset'
+        }
+
 
     },
     amountContainer: {

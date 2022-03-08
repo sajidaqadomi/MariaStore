@@ -13,7 +13,7 @@ const TargetContextProvider = (props) => {
     useEffect(() => {
         if (target) {
             navigate(`/home/${target}`);
-            dispatch(getProducts(target));
+            // dispatch(getProducts(target));
         }
     }, [target, dispatch]);
 
