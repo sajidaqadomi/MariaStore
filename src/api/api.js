@@ -1,7 +1,9 @@
 import axios from "axios";
 
 import * as storage from "../utility/cache";
-const URL = "http://localhost:5000/api/v1";
+//const URL = "http://localhost:5000";
+
+const URL = 'https://mariastore-server.herokuapp.com'
 
 export const API = axios.create({ baseURL: URL });
 
