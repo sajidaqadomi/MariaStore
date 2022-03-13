@@ -4,7 +4,6 @@ import {
     Container,
     Divider,
     IconButton,
-    //Link,
     Typography,
 } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
@@ -13,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import StripeCheckout from "react-stripe-checkout";
+import { Link } from "react-router-dom";
 
 import {
     emptyCartByUserId,
@@ -22,8 +22,7 @@ import {
 import useStyles from "./styles";
 import { postPayment } from "../../actions/payment";
 import { Loading } from "../../components";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+
 
 const STRIPE_KEY = process.env.REACT_APP_STRIPE;
 
@@ -53,8 +52,10 @@ const Cart = () => {
     };
 
     const onToken = (token) => {
-        if (token) console.log(token, "token");
-        dispatch(postPayment({ tokenId: token.id, amount: total * 100 }, navigate));
+        if (token)
+            dispatch(
+                postPayment({ tokenId: token.id, amount: total * 100 }, navigate)
+            );
     };
 
     const clearCart = () => {
@@ -89,8 +90,12 @@ const Cart = () => {
                     </Button>
                 </Link>
                 <div className={classes.links}>
-                    {/* <Link className={classes.link}>shopping bage(2)</Link>
-                    <Link className={classes.link}>your wishlist (0)</Link> */}
+                    <Link className={classes.link} to={`/cart`}>
+                        shopping bage(2)
+                    </Link>
+                    <Link className={classes.link} to={`/wishlists?likeId=${user.id}`}>
+                        your wishlist (0)
+                    </Link>
                 </div>
                 <Button variant="contained" className={classes.btn} onClick={clearCart}>
                     clear cart
@@ -156,7 +161,6 @@ const Cart = () => {
                                                     handleOrderQuantity("dec", item.id, item.quantity)
                                                 }
                                             >
-                                                {" "}
                                                 <Remove />
                                             </IconButton>
                                         </div>

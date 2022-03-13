@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 
 const ScrollList = ({ children, slidesNumber, rest }) => {
+
     const settings = {
         dots: false,
         arrows: true,
@@ -26,12 +27,11 @@ const ScrollList = ({ children, slidesNumber, rest }) => {
             },
         ],
     };
-    return (
 
+    return (
         <Slider {...settings} {...rest}>
             {children}
         </Slider>
-
     );
 };
 

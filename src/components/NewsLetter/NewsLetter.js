@@ -8,9 +8,10 @@ import useStyles from "./styles";
 const NewsLetter = () => {
     const classes = useStyles();
     const { pathname } = useLocation();
-    //  console.log(location)
+
     if (pathname === "/login" || pathname === "/register" || pathname === "/cart")
         return <></>;
+
     return (
         <div className={classes.root}>
             <Typography variant="h1" component="h2" className={classes.title}>

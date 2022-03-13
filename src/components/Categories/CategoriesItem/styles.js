@@ -11,12 +11,10 @@ export default makeStyles((theme) => ({
 
     },
     imgListItem: {
-        //  padding: '0px 8px'
         transition: 'all .3s',
         transform: 'scale(1, 0.95)',
         '&:hover': {
             transform: 'scale(1, 1)',
-
         }
 
     },
@@ -42,10 +40,6 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.down('md')]: {
             padding: theme.spacing(1)
         }
-
-        // alignItems: 'center'
-
-
     },
     title: {
         // textAlign: 'center',

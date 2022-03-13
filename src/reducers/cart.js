@@ -20,7 +20,6 @@ export const cart = (
             return { ...state, isLoading: false }
 
         case GET_CART_BY_USERID:
-            //  console.log(action.payload, "payload")
             return {
                 ...action.payload,
                 products: action.payload.products.map((orderItem) => ({

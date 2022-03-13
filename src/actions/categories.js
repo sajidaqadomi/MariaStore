@@ -18,7 +18,6 @@ export const getCategories = (query) => async (dispatch) => {
 
         if (response.error) throw response.error
     } catch (error) {
-        // console.log(error, 'error in categories');
         dispatch({ type: DATA_ERROR, payload: { error, errorTitle: "Loading Categories in error !", type: "categories" } })
 
     }

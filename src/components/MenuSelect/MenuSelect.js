@@ -1,6 +1,5 @@
-import React from 'react'
+import React from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
-
 
 const MenuSelect = ({ label, value, onChange, options, ...rest }) => {
     return (
@@ -13,13 +12,14 @@ const MenuSelect = ({ label, value, onChange, options, ...rest }) => {
                 onChange={onChange}
                 {...rest}
             >
-                {options.map(({ value, label }) => <MenuItem key={value} value={value}>{label}</MenuItem>)}
-
+                {options.map(({ value, label }) => (
+                    <MenuItem key={value} value={value}>
+                        {label}
+                    </MenuItem>
+                ))}
             </Select>
         </FormControl>
-    )
-}
+    );
+};
 
-export default MenuSelect
-
-
+export default MenuSelect;

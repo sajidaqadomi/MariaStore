@@ -1,16 +1,10 @@
-import { Container, Paper, StylesProvider, Tab, Tabs } from "@material-ui/core";
+import { Container, StylesProvider, Tab, Tabs } from "@material-ui/core";
 import React from "react";
 
-import useStyles from './styles'
-
-
-
 const BottomNav = ({ value, handleChange, data }) => {
-    const classes = useStyles()
     return (
-
         <Container maxWidth="xl">
-            <StylesProvider >
+            <StylesProvider>
                 <Tabs
                     value={value}
                     indicatorColor="primary"
@@ -20,7 +14,6 @@ const BottomNav = ({ value, handleChange, data }) => {
                     // wrapped
                     variant="scrollable"
                     scrollButtons="auto"
-                // className={classes.root}
                 >
                     {data.map((c) => (
                         <Tab key={c} label={c} />
@@ -29,7 +22,6 @@ const BottomNav = ({ value, handleChange, data }) => {
                 </Tabs>
             </StylesProvider>
         </Container>
-
     );
 };
 

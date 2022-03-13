@@ -1,6 +1,5 @@
 import { makeStyles } from "@material-ui/core";
 
-
 export default makeStyles((theme) => ({
     container: {
         height: '100vh',
@@ -14,7 +13,6 @@ export default makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
-
     },
     paper: {
         width: '40%',
@@ -23,7 +21,6 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             width: '80%',
         }
-        // marginTop: '60px'
     },
     formTitle: {
         fontSize: '24px',
@@ -37,7 +34,4 @@ export default makeStyles((theme) => ({
         fontSize: '12px',
         textDecoration: 'underline'
     }
-
-
-
 }))

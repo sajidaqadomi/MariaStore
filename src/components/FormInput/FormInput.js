@@ -5,7 +5,6 @@ import { Controller, useFormContext } from "react-hook-form";
 
 const FormInput = ({ name, label, ...rest }) => {
     const methods = useFormContext();
-    // console.log(methods, 'methods');
     const [showPassword, setShowPassword] = useState(false);
 
     const handleShowPassword = () => {
@@ -27,23 +26,20 @@ const FormInput = ({ name, label, ...rest }) => {
                     }
                     fullWidth
                     InputProps={{
-                        endAdornment: (name === "password" || name === "confirmPassword") && (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleShowPassword}
-                                    edge="end"
-                                >
-                                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
+                        endAdornment: (name === "password" ||
+                            name === "confirmPassword") && (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleShowPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
                     }}
-                    error={
-                        methods.formState.errors[name]?.message
-                            ? methods.formState?.errors[name].message
-                            : null
-                    }
+                    error={methods.formState?.errors[name]?.message}
                     helperText={methods.formState?.errors[name]?.message}
                     {...rest}
                 />

@@ -1,4 +1,5 @@
 import {
+    Button,
     Container,
     ImageList,
     MenuItem,
@@ -8,20 +9,21 @@ import {
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useResponsive } from "react-hooks-responsive";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
 
 import useStyles from "./styles";
 import { ColorsOption } from "../../utility/colors";
 import { SizeOptions } from "../../utility/size";
 import Product from "./Product";
-import { getProducts } from "../../actions/products";
+import { getProducts, getProductsBySearch } from "../../actions/products";
 import { Loading, MenuSelect, SectionTitle } from "..";
 import { TargetContext } from "../../contexts/TargetContext";
 import ErrorMessage from "../ErrorMessage";
+import { FavoriteBorderOutlined } from "@material-ui/icons";
 
 const breakpoints = { xs: 0, sm: 480, md: 1024 };
 
-const Products = ({ catId, searchQuery }) => {
+const Products = ({ catId, searchQuery, likeQuery }) => {
     const classes = useStyles();
     const { screenIsAtMost } = useResponsive(breakpoints);
 
@@ -38,20 +40,25 @@ const Products = ({ catId, searchQuery }) => {
 
     const [filter, setFilter] = useState({ color: [], size: [] });
     const [sort, setSort] = useState("newest");
-    const [filterProducts, setFilterProducts] = useState(products);
+    const [filterProducts, setFilterProducts] = useState();
     const { target } = useContext(TargetContext);
 
+    useEffect(() => {
+        products && setFilterProducts(products)
 
+    }, [products]);
 
     useEffect(() => {
         if (location.search) {
+            likeQuery && dispatch(getProductsBySearch(null, likeQuery))
+            searchQuery && dispatch(getProductsBySearch(searchQuery, null))
         } else {
             if (title && catId) {
                 dispatch(getProducts(target, catId));
             }
             !title && dispatch(getProducts(target));
         }
-    }, [dispatch, catId, title, target, location.search]);
+    }, [dispatch, catId, title, target, location.search, likeQuery]);
 
     useEffect(() => {
         if (errors.length) {
@@ -63,17 +70,16 @@ const Products = ({ catId, searchQuery }) => {
     }, [errors]);
 
     useEffect(() => {
-        // console.log(products, "products");
         if (products) {
-            catId
+            (catId || searchQuery)
                 ? setFilterProducts(products)
                 : setFilterProducts(products.slice(0, 8));
         }
-
     }, [products, catId]);
 
     useEffect(() => {
-        catId && products &&
+        (catId || searchQuery) &&
+            products &&
             setFilterProducts(
                 products.filter((item) => {
                     return Object.entries(filter).every(([key, value]) => {
@@ -83,7 +89,7 @@ const Products = ({ catId, searchQuery }) => {
                     });
                 })
             );
-    }, [filter, catId, products]);
+    }, [filter, catId, searchQuery, products]);
 
     const handleFilter = (e) => {
         setFilter((prevFilter) => ({
@@ -111,12 +117,12 @@ const Products = ({ catId, searchQuery }) => {
         }
     }, [sort]);
     useEffect(() => {
-        if (catId) {
+        if (catId || searchQuery) {
             if (sort === "asc") sortPriceByAsc();
             if (sort === "desc") sortPriceByDesc();
             if (sort === "newest") sortByNewest();
         }
-    }, [sort, catId, sortPriceByAsc, sortPriceByDesc, sortByNewest]);
+    }, [sort, catId, sortPriceByAsc, sortPriceByDesc, sortByNewest, searchQuery]);
 
     useEffect(() => {
         let lastPath = location.pathname.split("/").slice(-1)[0];
@@ -139,9 +145,8 @@ const Products = ({ catId, searchQuery }) => {
         );
     }
 
-    if (products && !products.length && !isAtHome) {
-        // console.log('empty products')
-        navigate(
+    if (products && !products.length) {
+        (!isAtHome && !likeQuery) && navigate(
             `/no_results_page?v=${title ? title : isAtHome ? undefined : searchQuery
             }`,
             {
@@ -153,22 +158,30 @@ const Products = ({ catId, searchQuery }) => {
                             : "NOTHING MATCHES YOUR SEARCH",
                 },
             }
-        );
-        //return <Typography>hi free</Typography>
+        )
+        if (likeQuery) return (<div className={classes.emptyRoot}>
+            <FavoriteBorderOutlined fontSize="large" style={{ marginBottom: 16 }} />
+            <Typography variant="h4" gutterBottom>
+                You have no Saved items
+            </Typography>
+            <Typography variant='body1' gutterBottom>
+                {`Start saving as you shop by selecting the little heart.`}
+            </Typography>
+            <Button variant="contained" color="primary" component={Link} to={"/"}>
+                Start shopping
+            </Button>
+        </div>);
     }
-
-
 
     return (
         <>
-            {!isAtHome && (
+            {!isAtHome && !likeQuery && (
                 <Container>
                     <div className={classes.filtersContainer}>
                         <div className={classes.filterContent}>
                             <Typography variant="body2" className={classes.filterText}>
                                 Filter products:
                             </Typography>
-
                             <MenuSelect
                                 label="Color"
                                 className={classes.select}
@@ -220,20 +233,29 @@ const Products = ({ catId, searchQuery }) => {
                     </div>
                 </Container>
             )}
+            {
+                likeQuery && <Typography variant={"h2"} component="h2" className={classes.title}>
+                    Your Wishlist
+                </Typography>
+            }
             {isAtHome && <SectionTitle title="Shop by newest" />}
             <Container maxWidth="xl">
-                <div className={classes.root}>
+                {filterProducts?.length ? (<div className={classes.root}>
                     <ImageList
-                        rowHeight={screenIsAtMost("md") ? 350 : 400}
+                        //rowHeight={screenIsAtMost("md") ? 350 : 400}
+                        rowHeight={screenIsAtMost("md") ? 'auto' : 'auto'}
                         cols={screenIsAtMost("md") ? (screenIsAtMost("sm") ? 1 : 2) : 4}
                         gap={16}
                         className={classes.imageList}
                     >
-                        {filterProducts && filterProducts.map((product) => {
-                            return <Product key={product._id} product={product} />;
-                        })}
+                        {filterProducts &&
+                            filterProducts.map((product) => {
+                                return <Product key={product._id} product={product} />;
+                            })}
                     </ImageList>
-                </div>
+                </div>) : (<div className={`${classes.emptyRoot} ${classes.emptyFilter}`}>
+                    <Typography>0 styles found</Typography>
+                </div>)}
             </Container>
         </>
     );

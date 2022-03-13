@@ -79,7 +79,7 @@ const Footer = () => {
                                 <Phone className={classes.icon} /> +1 234 56 78
                             </Link>
                             <Link className={classes.contactItem}>
-                                <Mail className={classes.icon} /> contact@lama.dev
+                                <Mail className={classes.icon} /> contact@maria.ma
                             </Link>
                             <img
                                 className={classes.payment}

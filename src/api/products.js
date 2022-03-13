@@ -1,7 +1,6 @@
 import { API } from "./api";
 
 export const getProducts = (target, catId) => {
-    //console.log('api target', target)
     return catId
         ? API.get(`/products/?target=${target}&category=${catId}`)
         : API.get(`/products/?target=${target}`);
@@ -12,6 +11,10 @@ export const getProductsByCategory = (category) => {
 };
 export const getProductsBySearch = (searchValue) => {
     return API.get(`/products/search?searchQuery=${searchValue}`);
+};
+
+export const getLikeProducts = (userId) => {
+    return API.get(`/products?likeId=${userId}`);
 };
 
 export const getProductById = (id) => {
@@ -33,3 +36,8 @@ export const updateProductById = (id, updateProduct) => {
 export const deleteProductById = (id) => {
     return API.delete(`/products/${id}`);
 };
+
+export const likeProduct = (id) => {
+    return API.patch(`/products/${id}/like`)
+
+}

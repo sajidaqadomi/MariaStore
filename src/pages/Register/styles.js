@@ -14,8 +14,6 @@ export default makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
-
-
     },
     offset: theme.mixins.toolbar,
     paper: {
@@ -25,7 +23,6 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             width: '80%'
         }
-        // marginTop: '60px'
     },
     formTitle: {
         fontSize: '24px',
@@ -49,7 +46,4 @@ export default makeStyles((theme) => ({
         }
 
     }
-
-
-
 }))

@@ -1,36 +1,26 @@
 import { IconButton, InputBase, Paper } from "@material-ui/core";
 import { CancelRounded, Search } from "@material-ui/icons";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getProductsBySearch } from "../../../../actions/products";
 
-import useStyles from './styles'
+import useStyles from "./styles";
 
 const SearchInput = ({ className = {} }) => {
     const [value, setValue] = useState("");
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const classes = useStyles()
+    const navigate = useNavigate();
+    const classes = useStyles();
 
     const handleSearch = () => {
         if (value.trim()) {
-
-            dispatch(getProductsBySearch(value));
-            navigate(
-                `/products/search?searchQuery=${value}`
-            );
-            setValue('')
-
-
+            navigate(`/products/search?searchQuery=${value}`);
+            setValue("");
         } else {
             navigate(`/`);
         }
-    }
+    };
 
     return (
         <Paper square elevation={0} className={`${classes.paper} ${className}`}>
-
             <InputBase
                 placeholder="Search"
                 type="text"
@@ -39,7 +29,7 @@ const SearchInput = ({ className = {} }) => {
                 size="small"
                 onChange={(e) => setValue(e.target.value)}
                 value={value}
-                endAdornment={(
+                endAdornment={
                     <>
                         {value && (
                             <IconButton
@@ -54,8 +44,6 @@ const SearchInput = ({ className = {} }) => {
                             <Search />
                         </IconButton>
                     </>
-                )
-
                 }
             />
         </Paper>
@@ -63,5 +51,3 @@ const SearchInput = ({ className = {} }) => {
 };
 
 export default SearchInput;
-
-

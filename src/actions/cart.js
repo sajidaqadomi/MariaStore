@@ -31,7 +31,6 @@ export const getCartByUserId = (id) => async (dispatch) => {
 export const addToCart = (id, product) => async (dispatch) => {
     try {
         const { data } = await Api.addToCart(id, product);
-        // console.log(data, 'add to cart')
         dispatch({ type: ADD_PRODUCT_TO_CART, payload: data.orderItem });
     } catch (error) {
         console.log(error);
@@ -41,7 +40,6 @@ export const addToCart = (id, product) => async (dispatch) => {
 export const updateOrderItemQ = (id, order) => async (dispatch) => {
     try {
         const { data } = await Api.updateOrderItemById(id, order);
-
         dispatch({ type: UPDATE_ORDER_ITEM_Q, payload: data });
     } catch (error) {
         console.log(error);

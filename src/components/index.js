@@ -1,5 +1,5 @@
+export { default as AmountController } from './AmountController'
 export { default as Announcement } from './Announcement'
-export { default as Breadcrumb } from './Breadcrumb'
 export { default as Categories } from './Categories'
 export { default as ErrorMessage } from './ErrorMessage'
 export { default as Footer } from './Footer'

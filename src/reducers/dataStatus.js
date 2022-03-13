@@ -17,7 +17,6 @@ export const dataStatus = (
             return { ...state, isLoading: false };
 
         case DATA_ERROR:
-            // console.log(action.payload, "action.payload")
             let { error, errorTitle, type } = action.payload
             return { ...state, errors: [...state.errors, { error, errorTitle, type }] };
 

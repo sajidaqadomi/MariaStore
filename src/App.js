@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { CssBaseline } from "@material-ui/core";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -12,7 +12,7 @@ import {
   Cart,
   Success,
   EmptyPage,
-  NotFound,
+  NotFound
 } from "./pages";
 import { Footer, Header, NewsLetter, ScrollToTop } from "./components";
 import useStyles from "./styles";
@@ -25,7 +25,6 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation()
   const { user } = useSelector((state) => state.auth);
-  // const { errors } = useSelector((state) => state.dataStatus);
   const { target } = useContext(TargetContext);
 
   useEffect(() => {
@@ -34,13 +33,6 @@ function App() {
     }
   }, [dispatch, user]);
 
-  // const handleClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-
-  //   // dispatch({ type: DATA_ERROR_RESET });
-  // };
 
   useEffect(() => {
     if (location) dispatch({ type: DATA_ERROR_RESET });
@@ -48,25 +40,15 @@ function App() {
 
   return (
     <div className="App">
-      {/* <div className={classes.offset} /> */}
       <CssBaseline />
       <ScrollToTop />
-      {/* <Toast
-        open={errors ? true : false}
-        onClose={handleClose}
-        title={errors?.errorTitle}
-        type="error"
-        message={errors?.error}
-      /> */}
       <div className={classes.nav}>
-        {/* <Announcement /> */}
         <Header />
-        {/* <Breadcrumb /> */}
       </div>
       <Routes>
         <Route exact path="/home/:target" element={<Home />} />
         <Route exact path="/" element={<Navigate to={`/home/${target}`} />} />
-        {["/products/:target/:cat", "/products/search"].map((path, index) =>
+        {["/products/:target/:cat", "/products/search", "/wishlists"].map((path, index) =>
           <Route path={path} element={<ProductsList />} key={index} />
         )}
         <Route exact path="/product/:id" element={<Product />} />
@@ -87,8 +69,6 @@ function App() {
       </Routes>
       <NewsLetter />
       <Footer />
-
-
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import { Container, Typography } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Products } from "../../components";
 import { TargetContext } from "../../contexts/TargetContext";
+import { useSearch } from "../../hooks/useSearch";
 import useStyles from "./styles";
 
 const ProductsList = () => {
@@ -15,10 +16,7 @@ const ProductsList = () => {
     const [currCategory, setCurrCategory] = useState({});
     const { target } = useContext(TargetContext);
 
-    const useQuery = () => {
-        return new URLSearchParams(useLocation().search);
-    };
-    const searchQuery = useQuery().get("searchQuery");
+    const { searchQuery, likeQuery } = useSearch();
 
     useEffect(() => {
         if (title && categories.length) {
@@ -49,6 +47,8 @@ const ProductsList = () => {
                             {`"${searchQuery}"`}
                         </Typography>
                     </>
+                ) : likeQuery ? (
+                    <></>
                 ) : (
                     <>
                         <Typography variant={"h2"} component="h2" className={classes.title}>
@@ -60,8 +60,11 @@ const ProductsList = () => {
                     </>
                 )}
             </Container>
-
-            <Products catId={currCategory?.id} searchQuery={searchQuery} />
+            <Products
+                catId={currCategory?.id}
+                searchQuery={searchQuery}
+                likeQuery={likeQuery}
+            />
         </>
     );
 };

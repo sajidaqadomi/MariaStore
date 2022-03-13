@@ -39,7 +39,6 @@ const Login = () => {
         if (reason === "clickaway") {
             return;
         }
-
         dispatch({ type: AUTH_ERROR_RESET });
     };
 
@@ -75,7 +74,6 @@ const Login = () => {
                                 disabled={isLoading}
                                 style={{ marginTop: "10px" }}
                             />
-
                             <Link className={classes.link}>
                                 DO NOT YOU REMEMBER THE PASSWORD?
                             </Link>

@@ -5,11 +5,9 @@ export default makeStyles((theme) => ({
         display: 'flex',
         height: '100vh',
         backgroundColor: props => props.bg && (`#${props.bg}`)
-
     },
     imgContainer: {
         flex: 1
-
     },
     img: {
         width: '100%',
@@ -23,11 +21,9 @@ export default makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         padding: 50
-        //alignItems: 'center'
     },
     title: {
         fontSize: '70px',
-
     },
     desc: {
         margin: '50px 0',
@@ -40,7 +36,4 @@ export default makeStyles((theme) => ({
         fontSize: 20,
         width: 200
     }
-
-
-
 }))

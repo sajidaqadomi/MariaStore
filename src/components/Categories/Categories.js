@@ -16,18 +16,11 @@ const Categories = () => {
     useEffect(() => {
         if (errors.length) {
             let catError = errors.filter((err) => err.type === 'categories')
-            // console.log(catError, 'catError')
             setCatError(...catError)
         } else {
             setCatError(undefined)
         }
     }, [errors]);
-
-
-    // useEffect(() => {
-    //     console.log(categories, "categories in cat")
-
-    // }, [categories])
 
     const CategoriesList = () => (<Container maxWidth="lg">
         <div className={classes.slider}>

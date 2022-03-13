@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+
 import colors from "../../config/colors";
 
 export default makeStyles((theme) => ({
@@ -7,7 +8,6 @@ export default makeStyles((theme) => ({
         padding: '20px 0',
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
-
         }
     },
     imgContainer: {
@@ -17,22 +17,17 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             height: '350px'
         }
-
     },
     img: {
         width: '100%',
         height: '100%',
-        // objectFit: 'cover',
-
     },
     productInfo: {
         flex: '1',
         paddingLeft: '50px',
         [theme.breakpoints.down('sm')]: {
             paddingLeft: 0
-
         }
-
     },
     title: {
         fontWeight: 200
@@ -47,7 +42,7 @@ export default makeStyles((theme) => ({
     },
     filterContainer: {
         display: 'flex',
-        width: '50%',
+        width: '75%',
         justifyContent: 'space-between',
         alignItems: 'center',
         margin: '30px 0',
@@ -57,16 +52,19 @@ export default makeStyles((theme) => ({
     },
     filter: {
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        //justifyContent: 'space-between',
+        alignItems: 'center',
+        flex: 1
     },
     filterTitle: {
         fontWeight: 200,
-        fontSize: '20px'
+        fontSize: '20px',
+        marginRight: theme.spacing(1)
     },
     colors: {
         display: 'flex',
-        marginRight: theme.spacing(3),
+        marginRight: theme.spacing(2),
+        flexWrap: 'wrap'
 
     },
     select: {
@@ -76,33 +74,15 @@ export default makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width: '50%',
+        width: '75%',
         [theme.breakpoints.down('sm')]: {
             width: '100%'
         }
-
-    },
-    amountContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        marginRight: theme.spacing(3),
-
-    },
-    amount: {
-        width: '30px',
-        height: '30px',
-        border: `1px solid ${colors.light}`,
-        borderRadius: 10,
-        textAlign: 'center',
-        lineHeight: '30px',
-        fontWeight: 700,
-        margin: '0 5px'
     },
     btn: {
         border: `2px solid ${colors.tail}`,
         fontWeight: 700,
-        cursor: 'pointer'
+        cursor: 'pointer',
+        flex: 1
     }
-
-
 }))

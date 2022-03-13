@@ -41,7 +41,6 @@ const Register = () => {
         },
     });
     const { isLoading, error } = useSelector((state) => state.auth);
-    // console.log(isLoading, error, 'auth')
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const classes = useStyles();

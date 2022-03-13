@@ -1,4 +1,3 @@
-// import { Button, Slider, Typography } from '@material-ui/core'
 import React from "react";
 import Carousel from "react-material-ui-carousel";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
@@ -8,9 +7,19 @@ import colors from "../../config/colors";
 import useStyles from "./styles";
 import { sliderItems } from "../../data";
 import SliderItem from "./SliderItem";
+import { useState, useEffect } from "react";
 
 const SliderComponent = () => {
     const classes = useStyles();
+    const [sliderItem, setSliderItems] = useState(null);
+
+    useEffect(() => {
+        setSliderItems(sliderItems)
+        return () => {
+            setSliderItems(null)
+        };
+    }, []);
+
     return (
         <Carousel
             className={classes.carousel}
@@ -28,7 +37,7 @@ const SliderComponent = () => {
             NextIcon={<NavigateNextIcon fontSize="large" />} // Change the "inside" of the next button to "next"
             PrevIcon={<NavigateBeforeIcon fontSize="large" />}
         >
-            {sliderItems.map((item) => (
+            {sliderItem && sliderItem.map((item) => (
                 <SliderItem item={item} key={item.id} />
             ))}
         </Carousel>

@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { Title } from "@material-ui/icons";
+
 import colors from "../../config/colors";
 
 export default makeStyles((theme) => ({
@@ -7,7 +7,6 @@ export default makeStyles((theme) => ({
         backgroundColor: colors.lightDanger,
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2)
-
     },
     errorContainer: {
         height: '40vh',
@@ -21,7 +20,6 @@ export default makeStyles((theme) => ({
     },
     title: {
         fontWeight: '600'
-
     }
 
 }))
